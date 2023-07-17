@@ -1,5 +1,5 @@
 /* eslint-env node */
-require("@rushstack/eslint-patch/modern-module-resolution");
+require('@rushstack/eslint-patch/modern-module-resolution');
 
 module.exports = {
   root: true,
@@ -8,32 +8,27 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: [
-    "plugin:vue/essential",
-    "eslint:recommended",
-    "@vue/eslint-config-prettier",
-    "plugin:prettier/recommended",
-  ],
+  extends: ['plugin:vue/essential', 'eslint:recommended', 'plugin:prettier/recommended'],
   overrides: [
     {
       env: {
         node: true,
       },
-      files: [".eslintrc.{js,cjs}"],
+      files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
-        sourceType: "script",
+        sourceType: 'script',
       },
     },
   ],
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
-  plugins: ["prettier", "vue"],
+  plugins: ['prettier', 'vue'],
   rules: {
-    "prettier/prettier": "error",
-    "no-var": "error",
-    "no-debugger": "warn",
-    semi: ["error", "always"],
+    'prettier/prettier': 'error',
+    'no-var': 'error',
+    'no-debugger': 'warn',
+    semi: ['error', 'always'],
   },
 };
