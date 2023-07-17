@@ -1,15 +1,23 @@
-import Vue from 'vue'
-import { createPinia, PiniaVuePlugin } from 'pinia'
+import Vue from 'vue';
+import { createPinia, PiniaVuePlugin } from 'pinia';
 
-import App from './App.vue'
-import router from './router'
+import App from './App.vue';
+import router from './router';
 
-import './assets/main.css'
+import './assets/main.css';
 
-Vue.use(PiniaVuePlugin)
+import 'virtual:svg-icons-register';
+import SVGIconNames from 'virtual:svg-icons-names';
+import SvgIcon from './components/SvgIcon.vue';
 
-new Vue({
+console.log(SVGIconNames);
+
+Vue.use(PiniaVuePlugin);
+Vue.component('SvgIcon', SvgIcon);
+
+const app = new Vue({
   router,
   pinia: createPinia(),
-  render: (h) => h(App)
-}).$mount('#app')
+  render: (h) => h(App),
+});
+app.$mount('#app');
