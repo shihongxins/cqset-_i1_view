@@ -4,7 +4,6 @@ import { pinia } from './stores/index';
 import App from './App.vue';
 import router from './router';
 
-import './assets/main.css';
 import 'normalize.css';
 
 import 'virtual:svg-icons-register';
