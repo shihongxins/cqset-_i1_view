@@ -18,6 +18,7 @@ specifiers:
   eslint-plugin-vue: ^9.15.1
   husky: ^8.0.0
   lint-staged: ^13.2.3
+  normalize.css: ^8.0.1
   pinia: ^2.0.16
   postcss: ^8.4.26
   postcss-html: ^1.5.0
@@ -35,6 +36,7 @@ specifiers:
   vue-router: ^3.5.4
 
 dependencies:
+  normalize.css: 8.0.1
   pinia: 2.1.4_vue@2.7.14
   vue: 2.7.14
   vue-router: 3.6.5_vue@2.7.14
@@ -5390,6 +5392,10 @@ packages:
     resolution: {integrity: sha512-uVFpKhj5MheNBJRTiMZ9pE/7hD1QTeEvugSJW/OmLzAp78PB5O6adfMNTvmfKhXBkvCzC+rqifWcVYpGFwTjnw==}
     engines: {node: '>=14.16'}
     dev: true
+
+  /normalize.css/8.0.1:
+    resolution: {integrity: sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==}
+    dev: false
 
   /npm-run-path/4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
