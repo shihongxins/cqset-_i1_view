@@ -2,7 +2,8 @@ import Vue from 'vue';
 import { pinia } from './stores/index';
 
 import App from './App.vue';
-import router from './router';
+import { router } from './router';
+import './permission';
 
 import 'normalize.css';
 

@@ -34,4 +34,7 @@ export default defineConfig({
     preprocessorOptions: {},
     postcss: 'postcss.config.cjs',
   },
+  server: {
+    host: '0.0.0.0',
+  },
 });

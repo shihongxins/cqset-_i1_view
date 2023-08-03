@@ -3,10 +3,14 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-const router = new VueRouter({
+export const router = new VueRouter({
   mode: 'history',
   base: import.meta.env.BASE_URL,
-  routes: [],
+  routes: [
+    {
+      name: 'Login',
+      path: '/login',
+      component: () => import('@/views/Login.vue'),
+    },
+  ],
 });
-
-export default router;
