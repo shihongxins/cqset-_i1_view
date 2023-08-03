@@ -19,4 +19,19 @@ export default defineConfig({
     }),
   ],
   transformers: [transformerDirectives(), transformerVariantGroup()],
+  theme: {
+    colors: {
+      primary: '#139FFF',
+      danger: '#F56C6C',
+      warning: '#DFA43C',
+      success: '#26B926',
+    },
+  },
+  safelist: [
+    'i-material-symbols:lists-rounded',
+    'i-material-symbols:camera-video-outline',
+    'i-material-symbols:image-search-rounded',
+    'i-material-symbols:detector-alarm-outline-rounded',
+    'i-material-symbols:docs-outline',
+  ],
 });

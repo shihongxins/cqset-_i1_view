@@ -1,4 +1,9 @@
 import Vue from 'vue';
+
+import 'dayjs/locale/zh-cn';
+import dayjs from 'dayjs';
+dayjs.locale('zh-cn');
+
 import { pinia } from './stores/index';
 
 import App from './App.vue';

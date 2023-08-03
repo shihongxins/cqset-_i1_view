@@ -24,6 +24,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.6.6",
     "@commitlint/config-conventional": "^17.6.6",
+    "@iconify-json/material-symbols": "^1.1.53",
     "@release-it/conventional-changelog": "^7.0.0",
     "@rushstack/eslint-patch": "^1.1.0",
     "@unocss/reset": "^0.54.1",
