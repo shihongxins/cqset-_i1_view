@@ -4,6 +4,7 @@
   export default {
     data() {
       return {
+        message: '',
         from: {},
       };
     },
@@ -45,8 +46,11 @@
             if (data?.from) {
               this.from = data.from;
             }
-            this.handleRoutingLogin();
             handleBroadcastStop(ev);
+            this.message = '认证通过';
+            setTimeout(() => {
+              this.handleRoutingLogin();
+            }, 1000);
           }
         };
         window.addEventListener('message', handleBroadcastResponse);
@@ -79,27 +83,29 @@
 </script>
 
 <template>
-  <div class="login">
-    <p>权限认证中....</p>
-    <p>
-      如果长时间未认证通过点击 <span class="back-link" @click="handleRoutingBack">这里返回</span>
-    </p>
+  <div h="100vh" flex="~" justify="center" items="center">
+    <div
+      rounded="4"
+      w="1/2"
+      h="1/2"
+      shadow="~ blue-200"
+      text="2xl center"
+      flex="~ col"
+      justify="center"
+    >
+      <p>{{ message || '用户权限认证中....' }}</p>
+      <p m="t-10" v-show="!message">
+        如果长时间未认证通过点击
+        <span
+          text="blue-500"
+          class="hover:(underline underline-blue-500)"
+          cursor="pointer"
+          @click="handleRoutingBack"
+        >
+          这里
+        </span>
+        返回或关闭
+      </p>
+    </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-  .login {
-    height: 100vh;
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .back-link {
-    color: blue;
-    cursor: pointer;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-</style>
