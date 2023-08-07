@@ -45,7 +45,7 @@
   .device {
     &-card {
       box-sizing: border-box;
-      width: 28.75rem;
+      width: 28.5rem;
       height: 15.625rem;
       overflow: hidden;
       border: 1px solid transparent;

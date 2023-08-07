@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { routes as routesOfDashboard } from './dashboard';
+import { routes as bigscreenRoutes } from './bigscreen';
 
 Vue.use(VueRouter);
 
@@ -15,13 +15,13 @@ export const router = new VueRouter({
     },
     {
       path: '/',
-      redirect: '/dashboard',
+      redirect: '/bigscreen',
     },
     {
-      path: '/dashboard',
-      redirect: '/dashboard/devices',
-      component: () => import('@/views/dashboard/DashBoardLayout.vue'),
-      children: routesOfDashboard,
+      path: '/bigscreen',
+      redirect: '/bigscreen/devices',
+      component: () => import('@/views/bigscreen/Layout.vue'),
+      children: bigscreenRoutes,
     },
   ],
 });

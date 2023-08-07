@@ -3,8 +3,8 @@
   import ImgIconOnline from '@/assets/images/icon-count-online.png';
   import ImgIconOffline from '@/assets/images/icon-count-offline.png';
   import ImgIconPercentage from '@/assets/images/icon-count-percentage.png';
+  import { APIBigscreen } from '../../apis/bigscreen';
   import { validateResponseCode } from '@shihongxins/jsutils';
-  import { APIDashboardDevices } from '../../apis/dashboard/dashboardDevices';
   import { useGetDeviceList } from '../../composables/useGetDeviceList.js';
   import DeviceCard from './components/DeviceCard.vue';
   import { ref } from 'vue';
@@ -36,7 +36,7 @@
     },
   ]);
   const getDevicesStatusCounteData = async () => {
-    const [err, resData] = await APIDashboardDevices.screen.status();
+    const [err, resData] = await APIBigscreen.status();
     if (!err && validateResponseCode(resData)) {
       let { total = 0, online = 0, offline = 0, online_rate = 0 } = resData?.data || {};
       if (total === 0 || online === 0) {
@@ -49,6 +49,7 @@
     }
   };
   const getDeviceList = useGetDeviceList();
+  getDeviceList.params.size = 8;
 
   getDevicesStatusCounteData();
   getDeviceList.search();
@@ -115,8 +116,14 @@
       </div>
     </div>
     <div flex="1 ~ col" overflow="hidden">
-      <ul flex="1 ~ wrap" overflow="x-hidden y-auto" v-loading="getDeviceList.loading.value">
+      <ul
+        flex="1 ~ wrap"
+        justify="between"
+        overflow="x-hidden y-auto"
+        v-loading="getDeviceList.loading.value"
+      >
         <li
+          m="r-1 b-1"
           cursor="pointer"
           v-for="device in getDeviceList.list.value"
           :key="device.id"

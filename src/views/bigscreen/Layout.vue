@@ -9,14 +9,14 @@
       };
     },
     computed: {
-      dashboradRoutes() {
-        const routesOfDashboard = this.$router
+      bigscreenRoutes() {
+        const bigscreenRoutes = this.$router
           .getRoutes()
-          .filter((route) => /\/dashboard\//.test(route.path));
-        routesOfDashboard.forEach((route) => {
+          .filter((route) => /\/bigscreen\//i.test(route.path));
+        bigscreenRoutes.forEach((route) => {
           route.meta.active = route.path === this.$route.path;
         });
-        return routesOfDashboard;
+        return bigscreenRoutes;
       },
     },
     mounted() {
@@ -31,7 +31,7 @@
 </script>
 <template>
   <div h="100vh" overflow="hidden" flex="~ col">
-    <header class="dashboard-header" h="25" p="x-4" flex="~" items="center" text="xl">
+    <header class="bigscreen-header" h="25" p="x-4" flex="~" items="center" text="xl">
       <p flex="1/5">{{ currentTime }}</p>
       <h1 text="4xl center" select="none">在线监测</h1>
       <p flex="1/5" text="right">
@@ -42,16 +42,16 @@
     <div m="4 b-10" rounded="2" flex="1 ~ col" overflow="hidden" bg="primary/15">
       <nav h="25">
         <RouterLink
-          class="dashboard-nav-item"
-          v-for="navItem in dashboradRoutes"
+          class="bigscreen-nav-item"
+          v-for="navItem in bigscreenRoutes"
           :key="navItem.path"
           :to="navItem"
           :class="{ active: navItem.meta?.active }"
         >
-          <span class="dashboard-nav-item--icon">
+          <span class="bigscreen-nav-item--icon">
             <i class="icon" :class="navItem.meta?.iconClass"></i>
           </span>
-          <span class="dashboard-nav-item--text">{{ navItem.meta?.text }}</span>
+          <span class="bigscreen-nav-item--text">{{ navItem.meta?.text }}</span>
         </RouterLink>
       </nav>
       <main m="x-4" flex="1" overflow="hidden">
@@ -65,7 +65,7 @@
   .icon {
     @apply text-3xl;
   }
-  .dashboard {
+  .bigscreen {
     &-header {
       background-image: url('@/assets/images/theme-header.png');
       background-size: 100%;
