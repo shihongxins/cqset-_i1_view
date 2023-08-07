@@ -12,8 +12,8 @@ node_modules
 dist
 dist-ssr
 *.local
-src/lib*/third*
-*.min.*
+/src/lib*/third*
+/*.d.ts
 
 /cypress/videos/
 /cypress/screenshots/

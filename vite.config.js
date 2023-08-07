@@ -8,6 +8,9 @@ import eslintPlugin from 'vite-plugin-eslint';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import path from 'path';
 import UnoCSS from 'unocss/vite';
+import AutoImport from 'unplugin-auto-import/vite';
+import Components from 'unplugin-vue-components/vite';
+import { ElementUiResolver } from 'unplugin-vue-components/resolvers';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -26,6 +29,12 @@ export default defineConfig({
       symbolId: 'icon-[dir]-[name]',
     }),
     UnoCSS(),
+    AutoImport({
+      resolvers: [ElementUiResolver()],
+    }),
+    Components({
+      resolvers: [ElementUiResolver()],
+    }),
   ],
   resolve: {
     alias: {
@@ -38,5 +47,11 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
+    proxy: {
+      '/api': {
+        // target: 'http://iot.cqset.com',
+        target: 'http://192.168.1.166:8800',
+      },
+    },
   },
 });

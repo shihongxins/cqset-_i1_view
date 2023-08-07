@@ -23,6 +23,8 @@ console.log(SVGIconNames);
 
 Vue.component('SvgIcon', SvgIcon);
 
+import './libs/element-ui';
+
 const app = new Vue({
   router,
   pinia,
