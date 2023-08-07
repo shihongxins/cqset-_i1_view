@@ -38,9 +38,10 @@ request.interceptors.request.use(
       const userStore = useUserStore();
       const tokenValidated = userStore.validate();
       if (tokenValidated) {
-        request.defaults.headers['token'] = userStore.token;
+        request.defaults.headers.common['token'] = userStore.token;
+        config.headers['token'] = userStore.token;
       } else {
-        delete request.defaults.headers['token'];
+        delete request.defaults.headers.common['token'];
         // do other something like notify to user
       }
     }

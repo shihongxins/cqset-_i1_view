@@ -5,7 +5,9 @@ export const request = axios.create({
   baseURL: '/api',
   timeout: 10000,
   headers: {
-    token: '',
+    common: {
+      token: '',
+    },
   },
 });
 
@@ -21,14 +23,18 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   (response) => {
-    let resData = useHandleResponseBlob(response, Date.now());
-    if (!resData.data || resData.code === -1) {
-      resData = response.data;
+    try {
+      let resData = useHandleResponseBlob(response, Date.now());
+      if (!resData.data || resData.code === -1) {
+        resData = response.data;
+      }
+      if (!resData.data) {
+        resData = errorHandler.auth(response);
+      }
+      return errorHandler.wrapDataToErrorFirstStyle(resData);
+    } catch (error) {
+      return errorHandler.wrapDataToErrorFirstStyle(error || response, true);
     }
-    if (!resData.data) {
-      resData = errorHandler.auth(response);
-    }
-    return errorHandler.wrapDataToErrorFirstStyle(resData);
   },
   (err) => {
     let error = errorHandler.network(err.response);

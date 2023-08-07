@@ -1,11 +1,7 @@
 /**
- * @param {import('axios').AxiosResponse} response
- * @param {string} propsPath
- * @returns
+ * @template T
+ * @typedef {[Error|null, T, T] & {error: Error|null, data: T, origin: T}} ErrorFirstStyleData
  */
-export const useDestructuringFilename = (response, propsPath) => {
-  return propsPath.split('.').reduce((p, c) => p[c], response) || '';
-};
 
 /**
  * @template T
@@ -14,6 +10,21 @@ export const useDestructuringFilename = (response, propsPath) => {
  * @property {T|null|undefined} data
  * @property {string|null|undefined} msg
  */
+
+/**
+ * @template T
+ * @typedef {ErrorFirstStyleData<CustomResponseData<T>>} ErrorFirstStyleResponse
+ */
+
+/**
+ * @param {import('axios').AxiosResponse} response
+ * @param {string} propsPath
+ * @returns
+ */
+export const useDestructuringFilename = (response, propsPath) => {
+  return propsPath.split('.').reduce((p, c) => p[c], response) || '';
+};
+
 /**
  * @param {import('axios').AxiosResponse<Blob>} response
  * @param {string} optionalFileName
@@ -61,10 +72,9 @@ export const errorHandler = {
     [505, 'HTTP版本不支持'],
   ]),
   /**
-   * @typedef {[Error|null, any, any] & {error: Error|null|undefined, data: any, origin: any}} ErrorFirstData
-   * @param {*} origin
+   * @param {T} origin
    * @param {boolean} isError
-   * @returns {ErrorFirstData}
+   * @returns {ErrorFirstStyleData<T>}
    */
   wrapDataToErrorFirstStyle(origin, isError = false) {
     let error = null,
