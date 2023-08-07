@@ -54,7 +54,7 @@
           <span class="dashboard-nav-item--text">{{ navItem.meta?.text }}</span>
         </RouterLink>
       </nav>
-      <main flex="1" overflow="hidden">
+      <main m="x-4" flex="1" overflow="hidden">
         <RouterView></RouterView>
       </main>
     </div>

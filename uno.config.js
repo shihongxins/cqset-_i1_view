@@ -25,6 +25,8 @@ export default defineConfig({
       danger: '#F56C6C',
       warning: '#DFA43C',
       success: '#26B926',
+      info: '#909399',
+      content: '#F2F6FC',
     },
   },
   safelist: [
@@ -33,5 +35,11 @@ export default defineConfig({
     'i-material-symbols:image-search-rounded',
     'i-material-symbols:detector-alarm-outline-rounded',
     'i-material-symbols:docs-outline',
+    'color-primary',
+    'color-danger',
+    'color-warning',
+    'color-success',
+    'color-info',
+    'color-content',
   ],
 });
