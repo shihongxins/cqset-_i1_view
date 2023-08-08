@@ -24,4 +24,18 @@ export const DevTypeMap = new Map([
       icon: ImgIconDevTypeUnPTZ,
     },
   ],
+  [
+    'GUN',
+    {
+      desc: '枪机',
+      icon: ImgIconDevTypeUnGun,
+    },
+  ],
+  [
+    'PTZ',
+    {
+      desc: '云台',
+      icon: ImgIconDevTypeUnPTZ,
+    },
+  ],
 ]);

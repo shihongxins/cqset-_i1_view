@@ -13,7 +13,7 @@ export const routes = [
     },
   },
   {
-    path: 'video',
+    path: 'videos',
     name: 'BigscreenVideos',
     component: () => import('@/views/bigscreen/Videos.vue'),
     meta: {

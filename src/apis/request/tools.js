@@ -1,4 +1,12 @@
 /**
+ * @typedef {object} BaseQueryParams
+ * @property {string} keyword
+ * @property {number} page
+ * @property {number} size
+ * @property {'asc'|'desc'} sort
+ */
+
+/**
  * @template T
  * @typedef {[Error|null, T, T] & {error: Error|null, data: T, origin: T}} ErrorFirstStyleData
  */
