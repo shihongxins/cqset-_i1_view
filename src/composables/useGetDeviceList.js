@@ -18,7 +18,7 @@ export const useGetDeviceList = () => {
         device.updated_at = nativeFormat(device.updated_at);
         return device;
       });
-      total.value = resData?.total || this.deviceList.length;
+      total.value = resData?.total || list.value.length;
     }
     error.value = err;
   };

@@ -8,6 +8,8 @@
   import { useGetDeviceList } from '../../composables/useGetDeviceList.js';
   import DeviceCard from './components/DeviceCard.vue';
   import { ref } from 'vue';
+  import { router } from '../../router';
+  import { Message } from 'element-ui';
 
   const countList = ref([
     {
@@ -55,7 +57,11 @@
   getDeviceList.search();
 
   const handleRouteToDeviceChannel = (device) => {
-    console.log(device);
+    const { cmd_id = '', name = '' } = device;
+    if (!(cmd_id || name)) {
+      return Message.warning('未知设备信息');
+    }
+    router.push({ path: '/bigscreen/videos', query: { cmd_id, name } });
   };
 </script>
 
@@ -84,21 +90,17 @@
       </ul>
       <div m="r-4" flex="~" items="center">
         <label>在线状态</label>
-        <div m="x-4">
-          <select
-            rounded
-            ring="~ primary"
-            p="x-2"
-            w="25"
-            h="7.5"
-            bg="transparent"
+        <div class="select-wrapper" m="x-4">
+          <el-select
+            popper-class="select-dropdown-wrapper"
+            placeholder="请选择设备状态"
             v-model="getDeviceList.addtionalParams.status"
-            @change="getDeviceList.search"
+            @change="getDeviceList.search()"
           >
-            <option color="black" value="ALL">不限状态</option>
-            <option color="black" value="ONLINE">在线</option>
-            <option color="black" value="OFFLINE">离线</option>
-          </select>
+            <el-option label="不限状态" value="ALL"></el-option>
+            <el-option label="在线" value="ONLINE"></el-option>
+            <el-option label="离线" value="OFFLINE"></el-option>
+          </el-select>
         </div>
         <div rounded ring="~ primary" p="x-2">
           <input
