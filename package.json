@@ -13,6 +13,7 @@
     "release": "release-it"
   },
   "dependencies": {
+    "@liveqing/liveplayer": "^2.7.17",
     "@shihongxins/jsutils": "^1.1.2",
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",
@@ -49,6 +50,7 @@
     "postcss-scss": "^4.0.6",
     "prettier": "^3.0.0",
     "release-it": "^16.1.2",
+    "rollup-plugin-copy": "^3.4.0",
     "sass": "^1.63.6",
     "terser": "^5.14.2",
     "unocss": "^0.54.1",

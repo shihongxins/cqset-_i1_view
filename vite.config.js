@@ -11,6 +11,7 @@ import UnoCSS from 'unocss/vite';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementUiResolver } from 'unplugin-vue-components/resolvers';
+import Copy from 'rollup-plugin-copy';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -34,6 +35,17 @@ export default defineConfig({
     }),
     Components({
       resolvers: [ElementUiResolver()],
+    }),
+    Copy({
+      targets: [
+        { src: 'node_modules/@liveqing/liveplayer/dist/component/crossdomain.xml', dest: 'public' },
+        { src: 'node_modules/@liveqing/liveplayer/dist/component/liveplayer.swf', dest: 'public' },
+        {
+          src: 'node_modules/@liveqing/liveplayer/dist/component/liveplayer-lib.min.js',
+          dest: 'public/js',
+        },
+      ],
+      verbose: true,
     }),
   ],
   resolve: {
