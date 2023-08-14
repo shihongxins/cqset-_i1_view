@@ -118,7 +118,12 @@
       </div>
     </div>
     <div flex="1 ~ col" overflow="hidden">
-      <ul flex="1 ~ wrap" overflow="x-hidden y-auto" v-loading="getDeviceList.loading.value">
+      <ul
+        flex="1 ~ wrap"
+        items="start"
+        overflow="x-hidden y-auto"
+        v-loading="getDeviceList.loading.value"
+      >
         <li
           m="r-1 b-1"
           cursor="pointer"
