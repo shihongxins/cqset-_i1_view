@@ -85,6 +85,13 @@ export const errorHandler = {
    * @returns {ErrorFirstStyleData<T>}
    */
   wrapDataToErrorFirstStyle(origin, isError = false) {
+    if (
+      origin &&
+      origin.length === 3 &&
+      Object.keys(origin).join(',') === '0,1,2,error,data,origin'
+    ) {
+      return origin;
+    }
     let error = null,
       data = null;
     if (origin instanceof Error || isError) {

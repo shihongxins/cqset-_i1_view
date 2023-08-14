@@ -1,7 +1,10 @@
 import { reactive, ref } from 'vue';
 import { request } from '../apis/request';
+import { useI1CommonAPI } from '../apis/i1/common';
 import { useListQueryEffect } from './useListLoadEffect';
 import { nativeFormat, validateResponseCode } from '@shihongxins/jsutils';
+
+const APII1Common = useI1CommonAPI('/pc/i1', request);
 
 export const useGetDeviceList = () => {
   const addtionalParams = reactive({
@@ -11,7 +14,7 @@ export const useGetDeviceList = () => {
   const queryFunc = async () => {
     const reqData = Object.assign({}, params, addtionalParams);
     loading.value = true;
-    const [err, resData] = await request.post('/pc/i1/dev/list', reqData);
+    const [err, resData] = await APII1Common.dev.list(reqData);
     loading.value = false;
     if (!err && validateResponseCode(resData)) {
       list.value = [].concat(resData?.data || []).map((device) => {

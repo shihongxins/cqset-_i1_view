@@ -61,8 +61,9 @@ export default defineConfig({
     host: '0.0.0.0',
     proxy: {
       '/api': {
-        // target: 'http://iot.cqset.com',
-        target: 'http://192.168.1.166:8800',
+        target: 'http://ndiot.cqset.com',
+        // target: 'http://192.168.1.166:8800',
+        changeOrigin: true,
       },
     },
   },

@@ -3,6 +3,8 @@
   import VideoCard from './components/VideoCard.vue';
   import { router } from '../../router';
   import { Message } from 'element-ui';
+  import PlayerDialog from './components/PlayerDialog.vue';
+  import { ref } from 'vue';
 
   const getVideoList = useGetVideoList();
   getVideoList.params.size = 8;
@@ -14,12 +16,13 @@
 
   getVideoList.search();
 
-  const handleRouteToDeviceChannel = (device) => {
-    const { cmd_id = '', name = '' } = device;
+  const refPlayerDialog = ref(null);
+  const handleShowVideoPlayer = (video) => {
+    const { cmd_id = '', name = '' } = video;
     if (!(cmd_id || name)) {
       return Message.warning('未知设备信息');
     }
-    router.push({ path: '/bigscreen/videos', query: { cmd_id, name } });
+    refPlayerDialog.value.show(video);
   };
 </script>
 
@@ -67,18 +70,13 @@
       </div>
     </div>
     <div flex="1 ~ col" overflow="hidden">
-      <ul
-        flex="1 ~ wrap"
-        justify="between"
-        overflow="x-hidden y-auto"
-        v-loading="getVideoList.loading.value"
-      >
+      <ul flex="1 ~ wrap" overflow="x-hidden y-auto" v-loading="getVideoList.loading.value">
         <li
           m="r-1 b-1"
           cursor="pointer"
           v-for="video in getVideoList.list.value"
           :key="video.id"
-          @click="handleRouteToDeviceChannel(video)"
+          @click="handleShowVideoPlayer(video)"
         >
           <VideoCard :video="video"></VideoCard>
         </li>
@@ -92,6 +90,9 @@
           @current-change="getVideoList.pageChange"
         ></el-pagination>
       </div>
+    </div>
+    <div position="fixed -z-1">
+      <PlayerDialog ref="refPlayerDialog"></PlayerDialog>
     </div>
   </div>
 </template>
