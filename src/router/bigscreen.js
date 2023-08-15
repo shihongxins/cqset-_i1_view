@@ -23,9 +23,9 @@ export const routes = [
     },
   },
   {
-    path: 'historys',
-    name: 'BigscreenHistorys',
-    component: () => import('@/views/bigscreen/Devices.vue'),
+    path: 'histories',
+    name: 'BigscreenHistories',
+    component: () => import('@/views/bigscreen/Histories.vue'),
     meta: {
       text: '历史',
       iconClass: 'i-material-symbols:image-search-rounded',
@@ -45,7 +45,7 @@ export const routes = [
   {
     path: 'logs',
     name: 'BigscreenLogs',
-    component: () => import('@/views/bigscreen/Devices.vue'),
+    component: () => import('@/views/bigscreen/Logs.vue'),
     meta: {
       text: '日志',
       iconClass: 'i-material-symbols:docs-outline',

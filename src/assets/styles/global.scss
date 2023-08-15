@@ -33,8 +33,7 @@ body {
 .select {
   &-wrapper {
     @apply w-30;
-    &,
-    &.el-select {
+    .el-select {
       .el-input__inner,
       .el-select-dropdown__item.is-disabled:hover {
         @apply bg-transparent;
@@ -51,7 +50,6 @@ body {
   }
   &-dropdown-wrapper {
     @apply ring-blue/90 border-primary color-black;
-    &,
     &.el-select-dropdown {
       background-color: var(--un-ring-color) !important;
       @apply border-primary;
@@ -69,11 +67,70 @@ body {
     }
   }
 }
+
+.date-time-picker {
+  &-wrapper {
+    .el-date-editor--date {
+      .el-input__inner {
+        line-height: 2rem;
+        height: 2rem;
+        @apply border-primary color-white bg-transparent;
+      }
+      .el-input {
+        &__prefix,
+        &__suffix {
+          @apply flex items-center;
+        }
+        &__icon {
+          line-height: 2rem;
+        }
+      }
+    }
+  }
+  &-dropdown-wrapper {
+    @apply ring-blue/90 border-primary color-black;
+    &.el-picker-panel {
+      background-color: var(--un-ring-color) !important;
+      @apply border-primary;
+      .el-picker-panel__icon-btn {
+        color: #dcdfe6;
+      }
+      .el-date-picker__header-label {
+        color: #e4e7ed;
+      }
+      .el-date-table {
+        th {
+          color: #e4e7ed;
+        }
+        td {
+          &.next-month,
+          &.prev-month {
+            color: #c0c4cc;
+          }
+          &.available {
+            color: #ebeef5;
+          }
+          &.today {
+            span {
+              @apply color-warning;
+            }
+          }
+          &.current {
+            span {
+              @apply color-danger bg-content;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.date-time-picker-dropdown-wrapper,
 .popover-poper-wrapper,
 .select-dropdown-wrapper {
-  @apply ring-blue/90 border-primary color-black;
-  &,
-  &.el-popover {
+  &.el-popper {
+    @apply ring-blue/90 border-primary color-black;
     background-color: var(--un-ring-color) !important;
     @apply border-primary;
     $placement: top, right, bottom, left;

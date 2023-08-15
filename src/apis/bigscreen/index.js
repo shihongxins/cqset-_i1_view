@@ -34,4 +34,24 @@ export const APIBigscreen = {
     );
     return request.get(`${this.basePath}/dev`, { params: reqData });
   },
+  async histories(query = {}) {
+    const reqData = assignCommonProperty(
+      {
+        dept_id: 0,
+        line_id: 0,
+        tower_id: 0,
+        cmd_id: '',
+        media_type: 'all',
+        start_date: '',
+        end_date: '',
+        status: 'ALL',
+        keyword: '',
+        page: 1,
+        size: 8,
+        sort: 'asc',
+      },
+      query
+    );
+    return request.get(`${this.basePath}/history`, { params: reqData });
+  },
 };

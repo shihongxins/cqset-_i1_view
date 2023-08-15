@@ -1,28 +1,22 @@
 import { reactive, ref } from 'vue';
-import { request } from '../apis/request';
-import { useI1CommonAPI } from '../apis/i1/common';
 import { useListQueryEffect } from './useListLoadEffect';
+import { request } from '../apis/request';
 import { nativeFormat, validateResponseCode } from '@shihongxins/jsutils';
 
-const APII1Common = useI1CommonAPI('/pc/i1', request);
-
-export const useGetDeviceList = () => {
+export const useGetLineList = () => {
   const addtionalParams = reactive({
     dept_id: 0,
-    line_id: 0,
-    tower_id: 0,
-    status: 'ALL',
   });
 
   const queryFunc = async () => {
     const reqData = Object.assign({}, params, addtionalParams);
     loading.value = true;
-    const [err, resData] = await APII1Common.dev.list(reqData);
+    const [err, resData] = await request.post('/pc/line/list', reqData);
     loading.value = false;
     if (!err && validateResponseCode(resData)) {
-      list.value = [].concat(resData?.data || []).map((device) => {
-        device.updated_at = nativeFormat(device.updated_at);
-        return device;
+      list.value = [].concat(resData?.data || []).map((line) => {
+        line.updated_at = nativeFormat(line.updated_at);
+        return line;
       });
       total.value = resData?.total || list.value.length;
     }
