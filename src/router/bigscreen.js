@@ -35,7 +35,7 @@ export const routes = [
   {
     path: 'alarms',
     name: 'BigscreenAlarms',
-    component: () => import('@/views/bigscreen/Devices.vue'),
+    component: () => import('@/views/bigscreen/Alarms.vue'),
     meta: {
       text: '告警',
       iconClass: 'i-material-symbols:detector-alarm-outline-rounded',

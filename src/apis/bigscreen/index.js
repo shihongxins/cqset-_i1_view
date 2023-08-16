@@ -48,10 +48,30 @@ export const APIBigscreen = {
         keyword: '',
         page: 1,
         size: 8,
-        sort: 'asc',
+        sort: 'desc',
       },
       query
     );
     return request.get(`${this.basePath}/history`, { params: reqData });
+  },
+  async alarms(query = {}) {
+    const reqData = assignCommonProperty(
+      {
+        dept_id: 0,
+        line_id: 0,
+        tower_id: 0,
+        cmd_id: '',
+        media_type: 'all',
+        start_date: '',
+        end_date: '',
+        status: 'ALL',
+        keyword: '',
+        page: 1,
+        size: 8,
+        sort: 'desc',
+      },
+      query
+    );
+    return request.get(`${this.basePath}/alarm`, { params: reqData });
   },
 };

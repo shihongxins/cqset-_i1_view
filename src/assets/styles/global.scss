@@ -144,3 +144,62 @@ body {
     }
   }
 }
+
+.table-wrapper {
+  .el-table {
+    // 背景
+    @apply bg-transparent;
+    // 边框
+    &::before,
+    &::after {
+      @apply bg-primary;
+    }
+    & {
+      @apply border-primary;
+    }
+    // 行背景
+    tr,
+    th.el-table__cell {
+      @apply bg-transparent;
+    }
+    // 行 hover 背景
+    &--enable-row-hover .el-table__body tr:hover > td.el-table__cell {
+      @apply bg-primary/50;
+    }
+    // 行边框
+    td.el-table__cell,
+    th.el-table__cell.is-leaf {
+      @apply border-b border-primary;
+    }
+    &--border .el-table__cell,
+    td.el-table__cell {
+      @apply border-primary;
+    }
+    // 文字
+    & {
+      @apply color-content;
+      thead {
+        @apply color-white;
+      }
+    }
+  }
+}
+
+.el-drawer__wrapper {
+  .drawer-wrapper-main {
+    @apply bg-primary/70;
+  }
+}
+
+.el-dialog__wrapper {
+  .el-dialog {
+    @apply bg-primary/70;
+    &__title,
+    .el-form-item__label {
+      @apply color-content;
+    }
+    &__headerbtn .el-dialog__close {
+      @apply color-content;
+    }
+  }
+}
