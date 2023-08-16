@@ -29,25 +29,40 @@ const requestWhiteList = ['/sys/login'];
 
 request.interceptors.request.use(
   (config) => {
-    console.log('request.interceptors.request 1');
-    const tokenRequired = !(
-      config.headers['token'] ||
-      (requestWhiteList.length && requestWhiteList.indexOf(config.url) > -1)
-    );
-    if (tokenRequired) {
-      const userStore = useUserStore();
-      const tokenValidated = userStore.validate();
-      if (tokenValidated) {
-        request.defaults.headers.common['token'] = userStore.token;
-        config.headers['token'] = userStore.token;
-      } else {
-        delete request.defaults.headers.common['token'];
-        // do other something like notify to user
+    let { userIntercetorsConfig } = config;
+    if (userIntercetorsConfig?.request?.enable) {
+      console.log('request.interceptors.request 1');
+      if (userIntercetorsConfig.request.validToken) {
+        const tokenRequired = !(
+          config.headers['token'] ||
+          (requestWhiteList.length && requestWhiteList.indexOf(config.url) > -1)
+        );
+        if (tokenRequired) {
+          const userStore = useUserStore();
+          const tokenValidated = userStore.validate();
+          if (tokenValidated) {
+            request.defaults.headers.common['token'] = userStore.token;
+            config.headers['token'] = userStore.token;
+          } else {
+            delete request.defaults.headers.common['token'];
+            // do other something like notify to user
+          }
+        }
       }
     }
     return config;
   },
   (err) => {
-    return Promise.reject(errorHandler.wrapDataToErrorFirstStyle(err, true));
+    let {
+      config: { userIntercetorsConfig },
+    } = err;
+    if (userIntercetorsConfig?.request?.enable) {
+      return Promise.reject(
+        userIntercetorsConfig?.response?.useErrorFirstStyle
+          ? errorHandler.wrapDataToErrorFirstStyle(err, true)
+          : err
+      );
+    }
+    return err;
   }
 );

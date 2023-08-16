@@ -25,6 +25,36 @@
  */
 
 /**
+ * @typedef {object} UserIntercetorsConfigRequest
+ * @property {boolean?} enable
+ * @property {boolean?} validToken
+ * @typedef {object} UserIntercetorsConfigResponse
+ * @property {boolean?} enable
+ * @property {boolean?} autoDeconstructionData
+ * @property {boolean?} useErrorFirstStyle
+ * @typedef {object} UserIntercetorsConfig
+ * @property {UserIntercetorsConfigRequest?} request
+ * @property {UserIntercetorsConfigResponse?} response
+
+ * @param {UserIntercetorsConfig?} config
+ * @returns
+ */
+export const useUserIntercetorsConfig = (config = { request: true, response: true }) => {
+  let userIntercetorsConfig = {
+    request: config.request && {
+      enable: config.request.enable || true,
+      validToken: config.request.validToken || true,
+    },
+    response: config.response && {
+      enable: config.response.enable || true,
+      autoDeconstructionData: config.response.autoDeconstructionData || true,
+      useErrorFirstStyle: config.response.useErrorFirstStyle || true,
+    },
+  };
+  return userIntercetorsConfig;
+};
+
+/**
  * @param {import('axios').AxiosResponse} response
  * @param {string} propsPath
  * @returns

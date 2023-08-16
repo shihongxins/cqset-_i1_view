@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { errorHandler, useHandleResponseBlob } from './tools';
+import { useUserIntercetorsConfig, errorHandler, useHandleResponseBlob } from './tools';
+
+export const userIntercetorsConfig = useUserIntercetorsConfig();
 
 export const request = axios.create({
   baseURL: '/api',
@@ -9,6 +11,7 @@ export const request = axios.create({
       token: '',
     },
   },
+  userIntercetorsConfig,
 });
 
 request.interceptors.request.use(
@@ -23,21 +26,48 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   (response) => {
-    try {
-      let resData = useHandleResponseBlob(response, Date.now());
-      if (!resData.data || resData.code === -1) {
-        resData = response.data;
+    let {
+      config: { userIntercetorsConfig },
+    } = response;
+    if (userIntercetorsConfig?.response?.enable) {
+      try {
+        let resData;
+        if (userIntercetorsConfig.response.autoDeconstructionData) {
+          resData = useHandleResponseBlob(response, Date.now());
+          if (!resData.data || resData.code === -1) {
+            resData = response.data;
+          }
+          if (!resData.data) {
+            resData = errorHandler.auth(response);
+          }
+        } else {
+          resData = response;
+        }
+        return userIntercetorsConfig.response.useErrorFirstStyle
+          ? errorHandler.wrapDataToErrorFirstStyle(resData)
+          : resData;
+      } catch (error) {
+        return userIntercetorsConfig.response.useErrorFirstStyle
+          ? errorHandler.wrapDataToErrorFirstStyle(error || response, true)
+          : error;
       }
-      if (!resData.data) {
-        resData = errorHandler.auth(response);
-      }
-      return errorHandler.wrapDataToErrorFirstStyle(resData);
-    } catch (error) {
-      return errorHandler.wrapDataToErrorFirstStyle(error || response, true);
     }
+    return response;
   },
   (err) => {
-    let error = errorHandler.network(err.response);
-    return Promise.reject(errorHandler.wrapDataToErrorFirstStyle(error));
+    let {
+      config: { userIntercetorsConfig },
+    } = err;
+    if (userIntercetorsConfig?.response?.enable) {
+      let error = userIntercetorsConfig.response.autoDeconstructionData
+        ? errorHandler.network(err.response)
+        : err;
+      return Promise.reject(
+        userIntercetorsConfig.response.useErrorFirstStyle
+          ? errorHandler.wrapDataToErrorFirstStyle(error)
+          : error
+      );
+    }
+    return err;
   }
 );
