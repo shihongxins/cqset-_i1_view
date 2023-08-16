@@ -1,12 +1,14 @@
 <script>
-  import { mapActions } from 'pinia';
+  import { mapState, mapActions } from 'pinia';
   import { useUserStore } from '../stores/user';
   export default {
     data() {
       return {
         message: '',
-        from: {},
       };
+    },
+    computed: {
+      ...mapState(useUserStore, ['from']),
     },
     mounted() {
       this.handleRoutingLogin();
@@ -18,6 +20,7 @@
       }),
       handleRoutingLogin() {
         const logined = this.loginValidate();
+        console.log('logined', logined);
         if (logined) {
           this.$router.push('/');
         } else {
@@ -30,24 +33,23 @@
          * @param {MessageEvent<any>} ev
          */
         const handleBroadcastResponse = (ev) => {
-          console.log('Broadcast receive');
+          console.log('Broadcast receive', ev);
           if (
             [
               'http://localhost:9528',
               'http://192.168.1.173:9528',
               'http://iot.cqset.com',
               'https://iot.cqset.com',
+              'http://ndiot.cqset.com',
+              'https://ndiot.cqset.com',
             ].includes(ev.origin)
           ) {
             const { data = {} } = ev;
             if (data?.userInfo?.token) {
-              this.loginInfoRefresh(data.userInfo);
+              this.loginInfoRefresh(data.userInfo, data.from);
+              this.message = '认证通过';
+              handleBroadcastStop(ev);
             }
-            if (data?.from) {
-              this.from = data.from;
-            }
-            handleBroadcastStop(ev);
-            this.message = '认证通过';
             setTimeout(() => {
               this.handleRoutingLogin();
             }, 1000);
@@ -74,7 +76,7 @@
             location.href = this.from.href;
           }
         } else {
-          window.open('https://iot.cqset.com/view/#/login', '智慧电网数据分析平台');
+          window.open('http://iot.cqset.com/view/#/login', '智慧电网数据分析平台');
           window.close();
         }
       },

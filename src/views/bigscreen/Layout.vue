@@ -1,5 +1,7 @@
 <script>
   import dayjs from 'dayjs';
+  import { useUserStore } from '../../stores/user';
+  import { mapState, mapActions } from 'pinia';
 
   export default {
     data() {
@@ -18,6 +20,35 @@
         });
         return bigscreenRoutes;
       },
+      ...mapState(useUserStore, ['userName', 'from']),
+    },
+    methods: {
+      ...mapActions(useUserStore, ['logout']),
+      handleCommand(command) {
+        if (command === 'logout') {
+          this.handleLogout();
+        }
+        if (command === 'backOrigin') {
+          this.handleBackOrigin();
+        }
+      },
+      handleBackOrigin() {
+        if (this.from?.href) {
+          if (this.from?.name) {
+            window.open(this.from.href, this.from.name);
+          } else {
+            location.href = this.from.href;
+          }
+        } else {
+          window.open('http://iot.cqset.com/view/#/login', '智慧电网数据分析平台');
+          window.close();
+        }
+      },
+      handleLogout() {
+        this.logout();
+        this.handleBackOrigin();
+        location.reload();
+      },
     },
     mounted() {
       this.timeTimer = setInterval(() => {
@@ -35,8 +66,19 @@
       <p flex="1/5">{{ currentTime }}</p>
       <h1 text="4xl center" select="none">在线监测</h1>
       <p flex="1/5" text="right">
-        <i class="icon i-material-symbols:home-rounded p-l-10"></i>
-        <i class="icon i-material-symbols:account-circle-outline"></i>
+        <el-dropdown @command="handleCommand">
+          <span color="content">
+            <i class="icon el-icon-user"> </i>
+            {{ userName }}
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item icon="el-icon-user">{{ userName }}</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-house" command="backOrigin">返回认证</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-position" divided command="logout">
+              退出
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </p>
     </header>
     <div m="4 b-10" rounded="2" flex="1 ~ col" overflow="hidden" bg="primary/15">
@@ -63,7 +105,7 @@
 
 <style lang="scss" scoped>
   .icon {
-    @apply text-3xl;
+    @apply text-3xl color-content;
   }
   .bigscreen {
     &-header {

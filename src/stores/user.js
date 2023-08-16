@@ -5,12 +5,16 @@ import { LOCAL_STORAGE } from './index';
 const LOCAL_STORAGE_KEY = 'User';
 
 const getDefaultState = () => {
-  let user;
+  let userInfo,
+    from = {
+      href: 'http://iot.cqset.com/view/#/login',
+      name: '智慧电网数据分析平台',
+    };
   try {
     const data = LOCAL_STORAGE.getItem(LOCAL_STORAGE_KEY) || {};
-    const loginTime = dayjs(data.time);
-    if (data && data.token && dayjs().diff(loginTime) < 1000 * 60 * 60 * 24 * 7) {
-      user = data;
+    const loginTime = dayjs(data.userInfo?.time);
+    if (data.userInfo?.token && dayjs().diff(loginTime) < 1000 * 60 * 60 * 24 * 7) {
+      ({ userInfo, from } = data);
     } else {
       LOCAL_STORAGE.removeItem(LOCAL_STORAGE_KEY);
     }
@@ -18,14 +22,12 @@ const getDefaultState = () => {
     console.error(error);
     LOCAL_STORAGE.removeItem(LOCAL_STORAGE_KEY);
   }
-  return user;
+  return { userInfo, from };
 };
 
 const useUserStore = defineStore(LOCAL_STORAGE_KEY, {
   state: () => {
-    return {
-      userInfo: getDefaultState(),
-    };
+    return getDefaultState();
   },
   getters: {
     userName: (state) => {
@@ -36,43 +38,26 @@ const useUserStore = defineStore(LOCAL_STORAGE_KEY, {
     },
   },
   actions: {
-    refresh(userinfo) {
-      if (userinfo) {
-        const loginTime = dayjs(userinfo.time);
-        if (userinfo && userinfo.token && dayjs().diff(loginTime) < 1000 * 60 * 60 * 24 * 7) {
-          LOCAL_STORAGE.setItem(LOCAL_STORAGE_KEY, userinfo);
+    refresh(userInfo, from) {
+      if (userInfo) {
+        const loginTime = dayjs(userInfo.time);
+        if (userInfo && userInfo.token && dayjs().diff(loginTime) < 1000 * 60 * 60 * 24 * 7) {
+          LOCAL_STORAGE.setItem(LOCAL_STORAGE_KEY, { userInfo, from: from || this.from });
         }
       }
-      this.userInfo = getDefaultState();
+      this.$patch(getDefaultState());
     },
     validate() {
       this.refresh();
       return Boolean(this.token);
     },
-    /*
-    async login(account, password) {
-      let resData;
-      try {
-        resData = await APILoginView.login(account, password);
-        if (resData && resData.code === 200) {
-          localStorage.setItem(LOCAL_STORAGE_KEY, encodeURIComponent(JSON.stringify(resData.data)));
-          this.userInfo = getDefaultState();
-        } else {
-          throw new Error(getResponseMsg(resData));
-        }
-      } catch (error) {
-        resData = error;
-      }
-      return resData;
-    },
-    */
     async logout() {
       let resData;
       try {
         // 退出无需请求接口，直接清除本地数据即可
         // resData = await APILoginView.login
         LOCAL_STORAGE.removeItem(LOCAL_STORAGE_KEY);
-        this.userInfo = getDefaultState();
+        this.$patch(getDefaultState());
         resData = true;
       } catch (error) {
         resData = error;
