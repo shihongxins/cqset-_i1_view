@@ -80,7 +80,7 @@ export default defineConfig({
     },
   },
   build: {
-    sourcemap: true,
+    sourcemap: false,
     assetsDir: 'static',
     rollupOptions: {
       external: ['vue', 'vue-demi', 'element-ui'],

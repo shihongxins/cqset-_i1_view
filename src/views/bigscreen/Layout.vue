@@ -118,7 +118,7 @@
     }
     &-nav {
       &-item {
-        @apply inline-flex items-center m-5 w-24 overflow-hidden relative cursor-pointer transition-all duration-500;
+        @apply inline-flex items-center m-5 w-40 rounded-6 overflow-hidden relative cursor-pointer transition-all duration-500;
         &--icon {
           background-image: url('@/assets/images/nav-item--icon.png');
           @apply p-y-3 p-x-8 bg-contain bg-center bg-no-repeat;
@@ -126,15 +126,11 @@
         &--text {
           line-height: 3rem;
           background-image: url('@/assets/images/nav-item--text.png');
-          @apply absolute right-40 -z-1 w-0 text-center bg-contain bg-center bg-no-repeat transition-all duration-500;
+          @apply absolute right-0 -z-1 w-25 text-center bg-contain bg-center bg-no-repeat transition-all duration-500;
         }
         &.active,
         &:hover {
-          @apply w-40;
-        }
-        &.active &--text,
-        &:hover &--text {
-          @apply right-0 w-25;
+          @apply shadow shadow-xl shadow-primary;
         }
       }
     }

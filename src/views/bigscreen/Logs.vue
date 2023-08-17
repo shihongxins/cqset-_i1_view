@@ -100,6 +100,9 @@
       carousel.remain = carousel.duration;
       carousel.status = true;
       carousel.timer = setInterval(() => {
+        if (total.value <= 0) {
+          carousel.status = false;
+        }
         if (carousel.status) {
           carousel.remain--;
           if (carousel.remain === -1) {

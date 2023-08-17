@@ -1,6 +1,8 @@
 <script setup>
   import { DevTypeMap } from '../../../utils';
   import { computed } from 'vue';
+  import { router } from '../../../router';
+  import { Message } from 'element-ui';
 
   const props = defineProps({
     device: {
@@ -17,6 +19,14 @@
       className,
     };
   });
+
+  const handleRouteToDeviceHistories = () => {
+    const { cmd_id = '', name = '' } = props.device;
+    if (!(cmd_id || name)) {
+      return Message.warning('未知设备信息');
+    }
+    router.push({ path: '/bigscreen/histories', query: { cmd_id, name } });
+  };
 </script>
 
 <template>
@@ -33,7 +43,7 @@
     </div>
     <div class="bottom">
       <p class="device-name">{{ device.name || '未命名设备' }}</p>
-      <button class="btn-goto--history">
+      <button class="btn-goto--history" @click.stop="handleRouteToDeviceHistories">
         <span :class="deviceStatus.className">{{ deviceStatus.desc }}</span>
         <span>历史</span>
       </button>

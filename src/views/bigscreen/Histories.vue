@@ -9,6 +9,7 @@
   import dayjs from 'dayjs';
   import HistoryAndLogPreviewCard from './components/HistoryAndLogPreviewCard.vue';
   import useDFSStore from '../../stores/dfs';
+  import { router } from '../../router';
 
   const getLineList = useGetLineList();
   const changeLine = (line_id = 0) => {
@@ -76,6 +77,10 @@
   const { params, loading, list, total, pageChange, sizeChange, search, resetSearch } =
     useListQueryEffect(queryFun, addtionalParams);
 
+  const route = router.currentRoute;
+  const { cmd_id = '', name = '' } = route?.query || {};
+  addtionalParams.cmd_id = cmd_id;
+  params.keyword = name;
   params.size = 4;
   params.sort = 'desc';
   search();
