@@ -3,6 +3,12 @@ body {
   background: fixed url('../images/theme-bg.png') center center/100% 100% no-repeat;
 }
 
+.uno-icon-fix,
+[class*='i-material'] {
+  -webkit-mask: var(--un-icon) no-repeat;
+  -webkit-mask-size: 100% 100%;
+}
+
 .pager-wrapper {
   @apply py-2 color-content;
   .el-pagination {

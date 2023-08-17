@@ -185,7 +185,7 @@
     <!-- 推流控制 -->
     <div class="group">
       <div class="group-title">
-        <i class="icon i-material-symbols:video-camera-back"></i>
+        <i class="icon uno-icon-fix i-material-symbols:video-camera-back"></i>
         <span>直播控制</span>
       </div>
       <div class="group-items ptz-ctrl--live">
@@ -199,7 +199,7 @@
     <!-- 定时任务 -->
     <div class="group">
       <div class="group-title">
-        <i class="icon i-material-symbols:task-rounded"></i>
+        <i class="icon uno-icon-fix i-material-symbols:task-rounded"></i>
         <span>定时抓图</span>
       </div>
       <div class="group-items">
@@ -212,7 +212,7 @@
       <!-- 云台 -->
       <div class="group">
         <div class="group-title">
-          <i class="icon i-material-symbols:camera-video-outline"></i>
+          <i class="icon uno-icon-fix i-material-symbols:camera-video-outline"></i>
           <span>云台控制</span>
         </div>
         <div class="group-items">
@@ -301,7 +301,7 @@
       <!-- 预置点位 -->
       <div class="group">
         <div class="group-title">
-          <i class="icon i-material-symbols:stack-star-outline-rounded"></i>
+          <i class="icon uno-icon-fix i-material-symbols:stack-star-outline-rounded"></i>
           <span>预置点位</span>
         </div>
         <div class="group-items preset">

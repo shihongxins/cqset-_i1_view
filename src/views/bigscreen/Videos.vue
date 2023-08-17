@@ -66,7 +66,7 @@
           @change="getVideoList.search"
           @keyup.enter="getVideoList.search"
         />
-        <i class="i-material-symbols:search-rounded"></i>
+        <i class="icon uno-icon-fix i-material-symbols:search-rounded"></i>
       </div>
     </div>
     <div flex="1 ~ col" overflow="hidden">

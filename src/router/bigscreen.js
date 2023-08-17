@@ -8,7 +8,7 @@ export const routes = [
     component: () => import('@/views/bigscreen/Devices.vue'),
     meta: {
       text: '设备',
-      iconClass: 'i-material-symbols:lists-rounded',
+      iconClass: 'uno-icon-fix i-material-symbols:lists-rounded',
       active: false,
     },
   },
@@ -18,7 +18,7 @@ export const routes = [
     component: () => import('@/views/bigscreen/Videos.vue'),
     meta: {
       text: '视频',
-      iconClass: 'i-material-symbols:camera-video-outline',
+      iconClass: 'uno-icon-fix i-material-symbols:camera-video-outline',
       active: false,
     },
   },
@@ -28,7 +28,7 @@ export const routes = [
     component: () => import('@/views/bigscreen/Histories.vue'),
     meta: {
       text: '历史',
-      iconClass: 'i-material-symbols:image-search-rounded',
+      iconClass: 'uno-icon-fix i-material-symbols:image-search-rounded',
       active: false,
     },
   },
@@ -38,7 +38,7 @@ export const routes = [
     component: () => import('@/views/bigscreen/Alarms.vue'),
     meta: {
       text: '告警',
-      iconClass: 'i-material-symbols:detector-alarm-outline-rounded',
+      iconClass: 'uno-icon-fix i-material-symbols:detector-alarm-outline-rounded',
       active: false,
     },
   },
@@ -48,7 +48,7 @@ export const routes = [
     component: () => import('@/views/bigscreen/Logs.vue'),
     meta: {
       text: '日志',
-      iconClass: 'i-material-symbols:docs-outline',
+      iconClass: 'uno-icon-fix i-material-symbols:docs-outline',
       active: false,
     },
   },

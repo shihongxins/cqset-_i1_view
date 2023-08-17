@@ -113,7 +113,7 @@
             @change="getDeviceList.search"
             @keyup.enter="getDeviceList.search"
           />
-          <i class="i-material-symbols:search-rounded"></i>
+          <i class="icon uno-icon-fix i-material-symbols:search-rounded"></i>
         </div>
       </div>
     </div>

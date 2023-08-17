@@ -262,8 +262,11 @@
         倒计时 <span text="underline">{{ carousel.remain }}</span> 秒
       </label>
       <button class="carousel-status-btn" @click="carousel.toggleStatus">
-        <i v-if="carousel.status" class="icon i-material-symbols:pause-circle-rounded"></i>
-        <i v-else class="icon i-material-symbols:play-circle-rounded"></i>
+        <i
+          v-if="carousel.status"
+          class="icon uno-icon-fix i-material-symbols:pause-circle-rounded"
+        ></i>
+        <i v-else class="icon uno-icon-fix i-material-symbols:play-circle-rounded"></i>
       </button>
     </div>
     <div flex="1 ~ col" overflow="hidden">
