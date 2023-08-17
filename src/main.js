@@ -23,7 +23,13 @@ console.log(SVGIconNames);
 
 Vue.component('SvgIcon', SvgIcon);
 
-import './libs/element-ui';
+console.log(import.meta.env);
+
+// config CDN to transform import in vite build options
+import ElementUI from 'element-ui';
+if (import.meta.env.MODE === 'development' || import.meta.env.DEV) {
+  Vue.use(ElementUI);
+}
 
 const app = new Vue({
   router,

@@ -8,10 +8,8 @@ import eslintPlugin from 'vite-plugin-eslint';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import path from 'path';
 import UnoCSS from 'unocss/vite';
-import AutoImport from 'unplugin-auto-import/vite';
-import Components from 'unplugin-vue-components/vite';
-import { ElementUiResolver } from 'unplugin-vue-components/resolvers';
 import Copy from 'rollup-plugin-copy';
+import { Plugin as importToCDN } from 'vite-plugin-cdn-import';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -30,12 +28,6 @@ export default defineConfig({
       symbolId: 'icon-[dir]-[name]',
     }),
     UnoCSS(),
-    AutoImport({
-      resolvers: [ElementUiResolver()],
-    }),
-    Components({
-      resolvers: [ElementUiResolver()],
-    }),
     Copy({
       targets: [
         { src: 'node_modules/@liveqing/liveplayer/dist/component/crossdomain.xml', dest: 'public' },
@@ -46,6 +38,26 @@ export default defineConfig({
         },
       ],
       verbose: true,
+    }),
+    importToCDN({
+      modules: [
+        {
+          name: 'vue',
+          var: 'Vue',
+          path: 'https://unpkg.com/vue@2.7.14/dist/vue.js',
+        },
+        {
+          name: 'vue-demi',
+          var: 'VueDemi',
+          path: 'https://unpkg.com/vue-demi@0.14.5/lib/index.iife.js',
+        },
+        {
+          name: 'element-ui',
+          var: 'Element',
+          path: 'https://unpkg.com/element-ui@2.15.13/lib/index.js',
+          css: 'https://unpkg.com/element-ui@2.15.13/lib/theme-chalk/index.css',
+        },
+      ],
     }),
   ],
   resolve: {
@@ -65,6 +77,13 @@ export default defineConfig({
         // target: 'http://192.168.1.166:8800',
         changeOrigin: true,
       },
+    },
+  },
+  build: {
+    sourcemap: true,
+    assetsDir: 'static',
+    rollupOptions: {
+      external: ['vue', 'vue-demi', 'element-ui'],
     },
   },
 });
