@@ -13,7 +13,7 @@ VueRouter.prototype.push = function (to, onComplete, onAbort) {
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: import.meta.env.BASE_URL,
   routes: [
     {
