@@ -93,7 +93,12 @@
       .player-container {
         @apply ring-2 ring-inset ring-primary rounded-2 w-full h-full overflow-hidden bg-black flex;
         .player-wrapper {
+          margin: 0.125rem;
           @apply flex-1 overflow-hidden relative;
+          .player {
+            margin: 0;
+            @apply h-full;
+          }
           .el-icon-video-play {
             @apply absolute top-1/2 left-1/2 text-4xl -translate-1/2 color-content cursor-pointer hover:(scale-105 color-primary);
           }
