@@ -28,6 +28,7 @@ console.log(import.meta.env);
 // config CDN to transform import in vite build options
 import ElementUI from 'element-ui';
 if (import.meta.env.MODE === 'development' || import.meta.env.DEV) {
+  import('element-ui/lib/theme-chalk/index.css');
   Vue.use(ElementUI);
 }
 

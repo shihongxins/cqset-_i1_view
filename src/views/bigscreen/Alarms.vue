@@ -196,7 +196,7 @@
       </button>
     </div>
     <div flex="1 ~ col" overflow="hidden">
-      <div flex="1" overflow="hidden" class="table-wrapper">
+      <div flex="1" overflow="hidden" class="table-wrapper" v-loading="loading">
         <el-table height="100%" border :data="list">
           <!-- <el-table-column type="selection" width="40px"></el-table-column> -->
           <el-table-column label="所属线路" prop="line_name"></el-table-column>

@@ -9,6 +9,10 @@ body {
   -webkit-mask-size: 100% 100%;
 }
 
+[class*='el-loading'] svg {
+  display: inline-block;
+}
+
 .pager-wrapper {
   @apply py-2 color-content;
   .el-pagination {
