@@ -33,9 +33,13 @@
          * @param {MessageEvent<any>} ev
          */
         const handleBroadcastResponse = (ev) => {
-          console.log('Broadcast receive', ev);
+          const validOrigin =
+            /^https?:\/\/((.*iot\.cqset\.com)|(localhost|(192\.168\.1)))|/gim.test(ev.origin);
+          console.log('Broadcast receive', ev, validOrigin);
           if (
+            validOrigin ||
             [
+              'http://localhost:8800',
               'http://localhost:9528',
               'http://192.168.1.173:9528',
               'http://iot.cqset.com',
