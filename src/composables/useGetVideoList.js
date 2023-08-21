@@ -23,10 +23,10 @@ export const useGetVideoList = () => {
     }
     if (!err && validateResponseCode(resData)) {
       list.value = [].concat(resData?.data || []).map((video) => {
-        video.last_time = nativeFormat(video.last_time);
         video.path = video.path
           ? (video.path + `&code=${DFSStore.code}`).replace(/&download=1/, '')
           : '';
+        video.last_update_time = nativeFormat(video.path ? video.last_time : video.updated_at);
         video.dev_type_detail = DevTypeMap.get(video.dev_type || 0);
         video.channel_type_detail = DevTypeMap.get(video.channel_type || 0);
         video.status_detail = {

@@ -206,7 +206,7 @@
           <el-table-column label="通道号" prop="channel_no"></el-table-column>
           <el-table-column label="预置点位" prop="present_no"></el-table-column>
           <el-table-column label="告警时间" prop="created_at"></el-table-column>
-          <el-table-column label="告警内容" prop="alarm_name"></el-table-column>
+          <el-table-column label="告警类型" prop="alarm_name"></el-table-column>
           <el-table-column label="告警状态" prop="clear_id" align="center">
             <template #default="{ row }">
               <!-- <span >{{  }}</span> -->

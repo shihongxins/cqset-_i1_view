@@ -8,7 +8,7 @@
 </script>
 
 <template>
-  <div class="video-card">
+  <div class="video-card" :class="video.status_detail.className">
     <el-image class="video-cover" alt="视频封面" fit="contain" :src="video.path">
       <template #error>
         <div class="video-cover-error">
@@ -27,10 +27,10 @@
           <li>通道类型 {{ video.channel_type_detail.desc }}</li>
           <li>通道序号 {{ video.channel_no }}</li>
           <li>通道名称 {{ video.channel_name }}</li>
-          <li>最新时间 {{ video.last_time }}</li>
+          <li>最新时间 {{ video.last_update_time }}</li>
         </ul>
         <p slot="reference" class="video-resume" :class="video.status_detail.className">
-          <span> {{ video.last_time }} </span>
+          <span> {{ video.last_update_time }} </span>
           <span>{{ video.channel_type_detail.desc }}</span>
           <span>{{ video.name }}</span>
           <span>{{ video.channel_name }}</span>
@@ -57,10 +57,29 @@
       border-width: 32PX 18PX 20PX;
       // prettier-ignore
       border-radius: 10PX;
+      @apply color-info;
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        @apply bg-info;
+      }
+      &.online {
+        &::after {
+          @apply bg-success;
+        }
+        .video-resume {
+          @apply color-success;
+        }
+      }
     }
     &-cover {
       flex: 1;
