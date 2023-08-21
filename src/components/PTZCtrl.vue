@@ -100,10 +100,10 @@
   };
 
   const flagBusyKey = ref('');
-  const handlePTZCtrlMousedown = async (key) => {
+  const handlePTZCtrlMousedown = (key) => {
     if (flagBusyKey.value) return;
     flagBusyKey.value = key;
-    await handlePTZCtrl();
+    handlePTZCtrl();
   };
   const handlePTZCtrlMouseUp = () => {
     flagBusyKey.value = '';
@@ -144,7 +144,7 @@
     }
     if (present_point) {
       flagBusyKey.value = 'presetGoto';
-      await handlePTZCtrlMousedown({
+      await handlePTZCtrl({
         action_arg: present_point,
       });
       handlePTZCtrlMouseUp();
