@@ -1,17 +1,20 @@
-export const DevTypeMap = new Map([
-  [0, { desc: '未知' }],
-  [1, { desc: '枪机' }],
-  [2, { desc: '云台' }],
-  [3, { desc: '杆塔倾斜' }],
-  [4, { desc: '微气象' }],
-  [5, { desc: '绝缘子污秽监测' }],
-  ['GUN', { desc: '枪机' }],
-  ['PTZ', { desc: '云台' }],
-  ['tower_tilt', { desc: '杆塔倾斜' }],
-  ['micro_meteorology', { desc: '微气象' }],
-  ['site_pollution', { desc: '现场污秽' }],
-  ['insulator_leakage_current', { desc: '绝缘子串泄露电流数据' }],
-]);
+export const DevTypeMap = {
+  1: '枪机',
+  2: '云台',
+  3: '杆塔倾斜',
+  4: '微气象',
+  5: '绝缘子污秽监测',
+};
+
+export const ChannelDevTypeMap = {
+  GUN: '枪机',
+  PTZ: '云台',
+  tower_tilt: '杆塔倾斜',
+  micro_meteorology: '微气象',
+  site_pollution: '现场污秽',
+  insulator_leakage_current: '绝缘子串泄露电流数据',
+  pollution_lightning_pressure: '污闪电压数据',
+};
 
 /**
  * @param {string} basePath

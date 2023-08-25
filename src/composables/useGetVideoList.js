@@ -3,7 +3,7 @@ import { useListQueryEffect } from './useListLoadEffect';
 import { APIBigscreen } from '../apis/bigscreen';
 import { useDFSStore } from '../stores/dfs';
 import { nativeFormat, validateResponseCode } from '@shihongxins/jsutils';
-import { DevTypeMap } from '../utils';
+import { DevTypeMapWithIcon } from '../utils';
 
 export const useGetVideoList = () => {
   const addtionalParams = reactive({
@@ -27,8 +27,8 @@ export const useGetVideoList = () => {
           ? (video.path + `&code=${DFSStore.code}`).replace(/&download=1/, '')
           : '';
         video.last_update_time = nativeFormat(video.path ? video.last_time : video.updated_at);
-        video.dev_type_detail = DevTypeMap.get(video.dev_type || 0);
-        video.channel_type_detail = DevTypeMap.get(video.channel_type || 0);
+        video.dev_type_detail = DevTypeMapWithIcon.get(String(video.dev_type || 0));
+        video.channel_type_detail = DevTypeMapWithIcon.get(String(video.channel_type || 0));
         video.status_detail = {
           desc: video.status ? '在线' : '离线',
           className: video.status ? 'online' : 'offline',

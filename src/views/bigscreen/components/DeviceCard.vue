@@ -1,5 +1,5 @@
 <script setup>
-  import { DevTypeMap } from '../../../utils';
+  import { DevTypeMapWithIcon } from '../../../utils';
   import { computed } from 'vue';
   import { router } from '../../../router';
   import { Message } from 'element-ui';
@@ -10,7 +10,9 @@
       required: true,
     },
   });
-  const deviceType = computed(() => DevTypeMap.get(props.device?.dev_type || 0));
+  const deviceType = computed(() => {
+    return DevTypeMapWithIcon.get(String(props.device?.dev_type || 0));
+  });
   const deviceStatus = computed(() => {
     let desc = props.device?.status ? '在线' : '离线';
     let className = props.device?.status ? 'online' : 'offline';

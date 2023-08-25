@@ -2,20 +2,23 @@ import ImgIconDevTypeUnknown from '@/assets/images/icon-dev--unknown.png';
 import ImgIconDevTypeUnGun from '@/assets/images/icon-dev--gun.png';
 import ImgIconDevTypeUnPTZ from '@/assets/images/icon-dev--ptz.png';
 
-import { DevTypeMap as I1DevTypeWithoutIcon } from '../apis/i1/common';
+import { DevTypeMap, ChannelDevTypeMap } from '../apis/i1/common';
 
 /**
  * @type {Map<number|string, {desc: string, icon?: any}>}
  */
-export const DevTypeMap = new Map(
-  [...I1DevTypeWithoutIcon].map((value) => {
-    value[1].icon = ImgIconDevTypeUnknown;
-    if ([1, 'GUN'].includes(value[0])) {
-      value[1].icon = ImgIconDevTypeUnGun;
+export const DevTypeMapWithIcon = new Map(
+  [...Object.entries(DevTypeMap), ...Object.entries(ChannelDevTypeMap)].map((item) => {
+    const value = {
+      desc: item[1],
+      icon: ImgIconDevTypeUnknown,
+    };
+    if (['1', 'GUN'].includes(item[0])) {
+      value.icon = ImgIconDevTypeUnGun;
     }
-    if ([2, 'PTZ'].includes(value[0])) {
-      value[1].icon = ImgIconDevTypeUnPTZ;
+    if (['2', 'PTZ'].includes(item[0])) {
+      value.icon = ImgIconDevTypeUnPTZ;
     }
-    return value;
+    return [item[0], value];
   })
 );
