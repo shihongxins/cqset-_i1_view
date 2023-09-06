@@ -44,8 +44,9 @@
   .video {
     &-card {
       box-sizing: border-box;
-      width: 28rem;
-      height: 17rem;
+      margin: auto;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
       border: 1px solid transparent;
       border-image-repeat: repeat;

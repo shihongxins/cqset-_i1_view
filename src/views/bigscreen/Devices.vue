@@ -125,7 +125,9 @@
         v-loading="getDeviceList.loading.value"
       >
         <li
-          m="r-1 b-1"
+          w="1/4"
+          h="1/2"
+          overflow="hidden"
           cursor="pointer"
           v-for="device in getDeviceList.list.value"
           :key="device.id"

@@ -77,7 +77,9 @@
         v-loading="getVideoList.loading.value"
       >
         <li
-          m="r-1 b-1"
+          w="1/4"
+          h="1/2"
+          overflow="hidden"
           cursor="pointer"
           v-for="video in getVideoList.list.value"
           :key="video.id"
