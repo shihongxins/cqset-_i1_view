@@ -38,3 +38,11 @@ const app = new Vue({
   render: (h) => h(App),
 });
 app.$mount('#app');
+
+import { BigScreenAdapter } from './utils/BigScreenAdapter';
+const $bigScreenAdapter = new BigScreenAdapter(1920, 1080);
+Vue.prototype.$bigScreenAdapter = $bigScreenAdapter;
+// $bigScreenAdapter.useRemSolution();
+$bigScreenAdapter.useScaleSolution({
+  target: '#app',
+});

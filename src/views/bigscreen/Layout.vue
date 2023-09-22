@@ -61,7 +61,7 @@
   };
 </script>
 <template>
-  <div h="100vh" overflow="hidden" flex="~ col">
+  <div h="full" overflow="hidden" flex="~ col">
     <header class="bigscreen-header" h="25" p="x-4" flex="~" items="center" text="xl">
       <p flex="1/5">{{ currentTime }}</p>
       <h1 text="4xl center" select="none">在线监测</h1>
