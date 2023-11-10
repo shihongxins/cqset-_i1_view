@@ -21,6 +21,7 @@ export default defineConfig({
   transformers: [transformerDirectives(), transformerVariantGroup()],
   theme: {
     colors: {
+      darkblue: '#14508c',
       primary: '#139FFF',
       danger: '#F56C6C',
       warning: '#DFA43C',
@@ -35,6 +36,7 @@ export default defineConfig({
     'i-material-symbols:image-search-rounded',
     'i-material-symbols:detector-alarm-outline-rounded',
     'i-material-symbols:docs-outline',
+    'color-darkblue',
     'color-primary',
     'color-danger',
     'color-warning',

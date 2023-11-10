@@ -37,7 +37,7 @@ request.interceptors.response.use(
           if (!resData.data || resData.code === -1) {
             resData = response.data;
           }
-          if (!resData.data) {
+          if (!resData.data && typeof resData.code === 'undefined') {
             resData = errorHandler.auth(response);
           }
         } else {

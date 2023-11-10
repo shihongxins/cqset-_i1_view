@@ -34,8 +34,13 @@ body {
         @apply bg-primary/50 rounded;
       }
     }
-    &__total {
+    &__total,
+    &__sizes,
+    &__jump {
       @apply color-content;
+    }
+    .el-input__inner {
+      @apply border-none bg-primary/50 color-content;
     }
   }
 }
@@ -173,7 +178,7 @@ body {
       @apply bg-transparent;
     }
     // 行 hover 背景
-    &--enable-row-hover .el-table__body tr:hover > td.el-table__cell {
+    .el-table__body tr:hover > td.el-table__cell {
       @apply bg-primary/50;
     }
     // 行边框
@@ -203,7 +208,7 @@ body {
 
 .el-dialog__wrapper {
   .el-dialog {
-    @apply bg-primary/70;
+    @apply bg-darkblue/90;
     &__title,
     .el-form-item__label {
       @apply color-content;

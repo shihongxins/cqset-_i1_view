@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { routes as bigscreenRoutes } from './bigscreen';
+import { routes as JSL_BYNR_Routes } from './jsl_byne';
 
 const VueRouterPush = VueRouter.prototype.push;
 const VueRouterReplace = VueRouter.prototype.replace;
@@ -21,6 +21,7 @@ export const router = new VueRouter({
       path: '/login',
       component: () => import('@/views/Login.vue'),
     },
+    /**
     {
       path: '/',
       redirect: '/bigscreen',
@@ -30,6 +31,17 @@ export const router = new VueRouter({
       redirect: '/bigscreen/devices',
       component: () => import('@/views/bigscreen/Layout.vue'),
       children: bigscreenRoutes,
+    },
+    */
+    {
+      path: '/',
+      redirect: '/jsl_byne',
+    },
+    {
+      path: '/jsl_byne',
+      redirect: '/jsl_byne/disaster',
+      component: () => import('@/views/jsl_byne/Layout.vue'),
+      children: JSL_BYNR_Routes,
     },
   ],
 });
