@@ -19,6 +19,8 @@
     "@shihongxins/jsutils": "^1.1.2",
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",
+    "echarts": "^5.4.3",
+    "echarts-gl": "^2.0.9",
     "element-ui": "^2.15.13",
     "normalize.css": "^8.0.1",
     "pinia": "^2.0.16",

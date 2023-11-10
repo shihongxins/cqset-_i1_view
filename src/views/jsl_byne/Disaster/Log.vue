@@ -158,7 +158,6 @@
       },
       // 重置查询条件
       resetSearch() {
-        this.resetDepartmentSelect();
         this.params = this.$options.data().params;
         this.search();
       },

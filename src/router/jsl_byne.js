@@ -12,4 +12,14 @@ export const routes = [
       active: false,
     },
   },
+  {
+    path: 'tower_tilt',
+    name: 'JSL_BYNR_TowerTilt',
+    component: () => import('@/views/jsl_byne/TowerTilt/Device.vue'),
+    meta: {
+      text: '杆塔倾斜',
+      iconClass: 'uno-icon-fix i-material-symbols:lists-rounded',
+      active: false,
+    },
+  },
 ];

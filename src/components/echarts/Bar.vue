@@ -1,0 +1,82 @@
+<template>
+  <div class="echart-bar-container" ref="echart-bar-container"></div>
+</template>
+
+<script>
+  import * as echarts from 'echarts/core';
+  import {
+    DatasetComponent,
+    GridComponent,
+    LegendComponent,
+    TitleComponent,
+    TooltipComponent,
+    DataZoomComponent,
+  } from 'echarts/components';
+  import { BarChart } from 'echarts/charts';
+  import { LabelLayout } from 'echarts/features';
+  import { CanvasRenderer } from 'echarts/renderers';
+
+  echarts.use([
+    DatasetComponent,
+    GridComponent,
+    LegendComponent,
+    TitleComponent,
+    TooltipComponent,
+    DataZoomComponent,
+    BarChart,
+    CanvasRenderer,
+    LabelLayout,
+  ]);
+  export default {
+    name: 'EchartBar',
+    data() {
+      return {
+        chart: null,
+      };
+    },
+    props: {
+      option: {
+        type: Object,
+        required: true,
+        default: () => {
+          return {};
+        },
+      },
+    },
+    watch: {
+      option: {
+        deep: true,
+        handler: function (newOption, oldOption) {
+          if (this.chart) {
+            try {
+              this.chart.setOption(newOption);
+            } catch (error) {
+              console.error(error);
+              this.chart.setOption(oldOption);
+            }
+          }
+        },
+      },
+    },
+    mounted() {
+      this.chart = echarts.init(this.$refs['echart-bar-container']);
+      this.chart.setOption(this.option);
+      window.addEventListener('resize', this.resize);
+    },
+    beforeDestroy() {
+      window.removeEventListener('resize', this.resize);
+    },
+    methods: {
+      resize() {
+        this.chart && this.chart.resize();
+      },
+    },
+  };
+</script>
+
+<style lang="scss" scoped>
+  .echart-bar-container {
+    width: 100%;
+    height: 100%;
+  }
+</style>
