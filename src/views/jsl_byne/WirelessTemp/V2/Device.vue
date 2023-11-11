@@ -1,27 +1,21 @@
 <script setup>
-  import { reactive, ref } from 'vue';
-  import { useGetLineList } from '../../../composables/useGetLineList';
-  import { APITowerTilt } from '../../../apis/jsl_byne/towertilt';
-  import { validateResponseCode, getResponseMessage, nativeFormat } from '@shihongxins/jsutils';
-  import { useListQueryEffect } from '../../../composables/useListLoadEffect';
+  import { ref, reactive } from 'vue';
+  import { APIWirelessTemperatureV2 } from '../../../../apis/jsl_byne/wirelesstemp';
+  import { validateResponseCode, nativeFormat, getResponseMessage } from '@shihongxins/jsutils';
+  import { useListQueryEffect } from '../../../../composables/useListLoadEffect';
   import { Message } from 'element-ui';
-  import DeviceCard from '../components/DeviceCard.vue';
-  import DialogTabs from '../components/DialogTabs.vue';
-  import Detail from './Detail.vue';
+  import DeviceCard from '../../components/DeviceCard.vue';
+  import DialogTabs from '../../components/DialogTabs.vue';
   import Log from './Log.vue';
-  import Alarm from './Alarm.vue';
-  import Analysis from './Analysis.vue';
 
   const originAddtionalParams = () => ({
-    line_id: 0,
-    status: 'ALL', // ALL ONLINE OFFLINE UNBIND
+    status: -1, // -1 0 1
   });
   const addtionalParams = reactive(originAddtionalParams());
-  const getLineList = useGetLineList();
   const queryFun = async () => {
     const reqData = Object.assign({}, params, addtionalParams);
     loading.value = true;
-    const [err, resData] = await APITowerTilt.list(reqData);
+    const [err, resData] = await APIWirelessTemperatureV2.device.list(reqData);
     loading.value = false;
     if (!err && validateResponseCode(resData)) {
       list.value = [].concat(resData?.data || []).map((device) => {
@@ -31,18 +25,21 @@
           OFFLINE: '离线',
           UNBIND: '未绑定',
         }[device.status];
-        device.status = device.status === 'ONLINE';
+        device.status = !!device.status;
         device.updated_at = nativeFormat(device.updated_at);
         device.intro = {
-          lonlat: {
-            desc: '经纬度',
-            formatter: () => {
-              const { lon = '0', lat = '0' } = device;
-              return `${lon}, ${lat}`;
-            },
+          dept_name: {
+            desc: '所属部门',
           },
           uuid: {
             desc: '设备编号',
+          },
+          alarm: {
+            desc: '报警值',
+            formatter() {
+              const { alarm_t = 0, alarm_v = 0 } = device;
+              return `温度： ${alarm_t} ℃ ， 电压： ${alarm_v} V`;
+            },
           },
           updated_at: {
             desc: '更新时间',
@@ -52,7 +49,7 @@
       });
       total.value = resData?.total || list.value.length;
     } else {
-      Message.error('获取杆塔倾斜设备失败：' + getResponseMessage(err || resData));
+      Message.error('获取无线测温设备失败：' + getResponseMessage(err || resData));
     }
   };
   const { params, loading, list, total, pageChange, search } = useListQueryEffect(
@@ -69,9 +66,9 @@
     selectedDevice.value = device;
     viewDetail.value = true;
   };
-  const activePaneName = ref('detail');
+  const activePaneName = ref('log');
   const handleChangePanel = (paneName) => {
-    activePaneName.value = paneName || 'detail';
+    activePaneName.value = paneName || 'log';
   };
 </script>
 
@@ -79,30 +76,7 @@
   <div h="full" flex="~ col" overflow="hidden">
     <div m="b-4" flex="~" justify="between" items="center">
       <div m="r-4" flex="~" items="center">
-        <label>所属线路</label>
-        <div class="select-wrapper" m="x-4">
-          <el-select
-            size="mini"
-            popper-class="select-dropdown-wrapper"
-            placeholder="请选择所属线路"
-            v-model="addtionalParams.line_id"
-            filterable
-            remote
-            :loading="getLineList.loading.value"
-            :remote-method="getLineList.search"
-            @focus="getLineList.search()"
-            @change="search()"
-          >
-            <el-option label="不限线路" :value="0"></el-option>
-            <el-option
-              v-for="line in getLineList.list"
-              :key="line.id"
-              :label="line.name"
-              :value="line.id"
-            ></el-option>
-          </el-select>
-        </div>
-        <label>在线状态</label>
+        <label>设备状态</label>
         <div class="select-wrapper" m="x-4">
           <el-select
             size="mini"
@@ -111,10 +85,9 @@
             v-model="addtionalParams.status"
             @change="search()"
           >
-            <el-option label="所有状态" value="ALL"></el-option>
-            <el-option label="在线" value="ONLINE"></el-option>
-            <el-option label="离线" value="OFFLINE"></el-option>
-            <el-option label="未绑定" value="UNBIND"></el-option>
+            <el-option label="所有状态" :value="-1"></el-option>
+            <el-option label="离线" :value="0"></el-option>
+            <el-option label="在线" :value="1"></el-option>
           </el-select>
         </div>
         <div rounded ring="~ primary" p="x-2">
@@ -161,23 +134,11 @@
     <template v-if="viewDetail">
       <DialogTabs
         v-model="viewDetail"
-        :panes="[
-          { label: '设备详情', name: 'detail' },
-          { label: '日志查询', name: 'log' },
-          { label: '告警日志', name: 'alarm' },
-          { label: '统计分析', name: 'analysis' },
-        ]"
+        :panes="[{ label: '日志查询', name: 'log' }]"
         :active-pane-name="activePaneName"
         @update:activePaneName="handleChangePanel"
       >
-        <Detail slot="detail" v-if="activePaneName === 'detail'" :device="selectedDevice"></Detail>
         <Log slot="log" v-if="activePaneName === 'log'" :device="selectedDevice"></Log>
-        <Alarm slot="alarm" v-if="activePaneName === 'alarm'" :device="selectedDevice"></Alarm>
-        <Analysis
-          slot="analysis"
-          v-if="activePaneName === 'analysis'"
-          :device="selectedDevice"
-        ></Analysis>
       </DialogTabs>
     </template>
   </div>

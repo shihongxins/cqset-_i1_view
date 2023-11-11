@@ -44,7 +44,7 @@
         <EchartsPie :option="onlineChartOption"></EchartsPie>
       </div>
       <div class="chart-analysis">
-        <EchartsLine :option="deptAnalysisChartOption"></EchartsLine>
+        <EchartsLine :option="deptAnalysisChartOption" ref="analysisChart"></EchartsLine>
       </div>
     </div>
   </div>
@@ -460,7 +460,9 @@
           line_id: this.params.line_id,
           date: dayjs(this.month).format('YYYY-MM'),
         };
+        this.$refs.analysisChart.chart.showLoading();
         const [err, resData] = await APITowerTilt.analysis(reqData);
+        this.$refs.analysisChart.chart.hideLoading();
         if (!err && validateResponseCode(resData)) {
           this.deptAnalysisChartOption.dataset.source = resData.data;
         } else {

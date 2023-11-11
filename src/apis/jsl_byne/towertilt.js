@@ -104,6 +104,10 @@ export const APITowerTilt = {
       line_id = 0,
       date = '', // yyyy-MM
     } = params;
-    return service.post(`${this.basePath}/analysis`, { dept_id, line_id, date });
+    return service.post(
+      `${this.basePath}/analysis`,
+      { dept_id, line_id, date },
+      { timeout: 30000 }
+    );
   },
 };

@@ -22,4 +22,14 @@ export const routes = [
       active: false,
     },
   },
+  {
+    path: 'wireless_temp/v2_device',
+    name: 'JSL_BYNR_WirelessTemp',
+    component: () => import('@/views/jsl_byne/WirelessTemp/V2/Device.vue'),
+    meta: {
+      text: '无线测温',
+      iconClass: 'uno-icon-fix i-material-symbols:lists-rounded',
+      active: false,
+    },
+  },
 ];
