@@ -12,6 +12,7 @@
   import ConductorTemperature from '../ConductorTemperature.vue';
   import ConductorDeviation from '../ConductorDeviation.vue';
   import ConductorSag from '../ConductorSag.vue';
+  import FaultList from './FaultList.vue';
 
   export default {
     props: {
@@ -32,6 +33,7 @@
       ConductorTemperature,
       ConductorDeviation,
       ConductorSag,
+      FaultList,
     },
     setup(props) {
       const refCompChannel = ref(null);
@@ -49,7 +51,7 @@
           conductor_deviation: 'ConductorDeviation',
           conductor_sag: 'ConductorSag',
         };
-        return DevTypeCompMap[dev_type];
+        return DevTypeCompMap[dev_type] || 'FaultList';
       });
       const date = ref(new Date());
       const queryFun = async () => {

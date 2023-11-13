@@ -106,6 +106,7 @@
         return [
           { label: '设备详情', name: 'detail' },
           { label: '设备通道', name: 'channelList' },
+          { label: '故障信息', name: 'faultList' },
         ].concat(
           selectedDeviceChannelList.value.map((channel) => {
             return {
@@ -336,7 +337,7 @@
           :channels="selectedDeviceChannelList"
         ></DeviceChannelList>
         <ChannelDetail
-          v-if="selectedChannel"
+          v-if="selectedChannel || activePaneName === 'faultList'"
           :slot="activePaneName"
           :channel="selectedChannel"
         ></ChannelDetail>
