@@ -8,6 +8,7 @@
   import DialogTabs from '../components/DialogTabs.vue';
   import Detail from './Detail.vue';
   import Log from './Log.vue';
+  import Analysis from './Analysis.vue';
 
   const originAddtionalParams = () => ({
     status: -1,
@@ -143,6 +144,11 @@
       >
         <Detail slot="detail" v-if="activePaneName === 'detail'" :device="selectedDevice"></Detail>
         <Log slot="log" v-if="activePaneName === 'log'"></Log>
+        <Analysis
+          slot="analysis"
+          v-if="activePaneName === 'analysis'"
+          :device="selectedDevice"
+        ></Analysis>
       </DialogTabs>
     </template>
   </div>
