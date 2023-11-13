@@ -6,6 +6,8 @@
   import LeakageCurrent from '../LeakageCurrent.vue';
   import SitePollution from '../SitePollution.vue';
   import PollutionLightningPressure from '../PollutionLightningPressure.vue';
+  import MicroMeteorology from '../MicroMeteorology.vue';
+  import IceMonitor from '../IceMonitor.vue';
 
   export default {
     props: {
@@ -19,6 +21,8 @@
       LeakageCurrent,
       SitePollution,
       PollutionLightningPressure,
+      MicroMeteorology,
+      IceMonitor,
     },
     setup(props) {
       const refCompChannel = ref(null);
@@ -28,6 +32,8 @@
           insulator_leakage_current: 'LeakageCurrent',
           site_pollution: 'SitePollution',
           pollution_lightning_pressure: 'PollutionLightningPressure',
+          micro_meteorology: 'MicroMeteorology',
+          ice_monitor: 'IceMonitor',
         };
         return DevTypeCompMap[dev_type];
       });
