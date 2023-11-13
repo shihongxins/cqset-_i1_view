@@ -13,6 +13,7 @@
   import DialogTabs from '../components/DialogTabs.vue';
   import DeviceDetail from './components/DeviceDetail.vue';
   import DeviceChannelList from './components/DeviceChannelList.vue';
+  import ChannelDetail from './components/ChannelDetail.vue';
 
   export default {
     name: 'GWDeviceList',
@@ -21,6 +22,7 @@
       DialogTabs,
       DeviceDetail,
       DeviceChannelList,
+      ChannelDetail,
     },
     setup() {
       const originAddtionalParams = () => ({
@@ -333,6 +335,11 @@
           :device="selectedDevice"
           :channels="selectedDeviceChannelList"
         ></DeviceChannelList>
+        <ChannelDetail
+          v-if="selectedChannel"
+          :slot="activePaneName"
+          :channel="selectedChannel"
+        ></ChannelDetail>
       </DialogTabs>
     </template>
   </div>
