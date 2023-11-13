@@ -1,4 +1,3 @@
-<!-- eslint-disable no-unused-vars -->
 <script>
   import { ref, computed } from 'vue';
   import { useListQueryEffect } from '../../../../composables/useListLoadEffect';
@@ -8,6 +7,11 @@
   import PollutionLightningPressure from '../PollutionLightningPressure.vue';
   import MicroMeteorology from '../MicroMeteorology.vue';
   import IceMonitor from '../IceMonitor.vue';
+  import BreezeVibrationCharacteristic from '../BreezeVibrationCharacteristic.vue';
+  import ConductorDancing from '../ConductorDancing.vue';
+  import ConductorTemperature from '../ConductorTemperature.vue';
+  import ConductorDeviation from '../ConductorDeviation.vue';
+  import ConductorSag from '../ConductorSag.vue';
 
   export default {
     props: {
@@ -23,6 +27,11 @@
       PollutionLightningPressure,
       MicroMeteorology,
       IceMonitor,
+      BreezeVibrationCharacteristic,
+      ConductorDancing,
+      ConductorTemperature,
+      ConductorDeviation,
+      ConductorSag,
     },
     setup(props) {
       const refCompChannel = ref(null);
@@ -34,6 +43,11 @@
           pollution_lightning_pressure: 'PollutionLightningPressure',
           micro_meteorology: 'MicroMeteorology',
           ice_monitor: 'IceMonitor',
+          breeze_vibration_characteristic: 'BreezeVibrationCharacteristic',
+          conductor_dancing: 'ConductorDancing',
+          conductor_temperature: 'ConductorTemperature',
+          conductor_deviation: 'ConductorDeviation',
+          conductor_sag: 'ConductorSag',
         };
         return DevTypeCompMap[dev_type];
       });
@@ -43,6 +57,7 @@
           ...props.channel,
           ...params,
           start_date: date.value,
+          sort: 'desc',
         };
         loading.value = true;
         const resData = await refCompChannel.value.queryFun(reqData);
