@@ -65,13 +65,14 @@
 
   const selectedDevice = ref(null);
   const viewDetail = ref(false);
-  const handleSelectDevice = (device) => {
-    selectedDevice.value = device;
-    viewDetail.value = true;
-  };
   const activePaneName = ref('detail');
   const handleChangePanel = (paneName) => {
     activePaneName.value = paneName || 'detail';
+  };
+  const handleSelectDevice = (device) => {
+    selectedDevice.value = device;
+    viewDetail.value = true;
+    handleChangePanel();
   };
 </script>
 

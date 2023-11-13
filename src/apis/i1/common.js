@@ -1,9 +1,14 @@
 export const DevTypeMap = {
+  0: '所有设备',
   1: '枪机',
   2: '云台',
   3: '杆塔倾斜',
   4: '微气象',
-  5: '绝缘子污秽监测',
+  5: '污秽监测',
+  6: '覆冰监测',
+  7: '微风振动',
+  8: '导线舞动',
+  9: '风偏弧垂',
 };
 
 export const ChannelDevTypeMap = {
@@ -14,6 +19,12 @@ export const ChannelDevTypeMap = {
   site_pollution: '现场污秽',
   insulator_leakage_current: '绝缘子串泄露电流数据',
   pollution_lightning_pressure: '污闪电压数据',
+  ice_monitor: '覆冰监测数据',
+  breeze_vibration_characteristic: '微风振动特征量',
+  conductor_dancing: '导线舞动特征量',
+  conductor_temperature: '导线温度数据',
+  conductor_deviation: '导线风偏',
+  conductor_sag: '导线弧垂',
 };
 
 /**
@@ -224,11 +235,31 @@ export const useI1CommonAPI = (basePath, service) => {
       return service.get(`${this.basePath}/list`, { ...reqData }).catch((reason) => reason);
     },
   };
+
+  const micro_meteorology = {
+    /**
+     * 微气象数据
+     * @param {object} params - 通道信息
+     * @param {string} params.cmd_id - 设备编号
+     * @param {string} params.component_id - 被监测设备 ID（17 位编码）
+     * @param {string} params.sort - 排序方式
+     * @param {string} params.start_date - 时间
+     * @param {number} params.page - 列表页码
+     * @param {number} params.size - 列表分页量
+     */
+    async list(params) {
+      if (!(params.cmd_id && params.component_id)) {
+        return new Error('无法获取微气象数据，缺少必要信息');
+      }
+      return service
+        .get(`${basePath}/component/micro_meteorology`, { params })
+        .catch((reason) => reason);
+    },
+  };
   return {
     dev,
     channel,
     upgrade,
+    micro_meteorology,
   };
 };
-
-export default useI1CommonAPI;

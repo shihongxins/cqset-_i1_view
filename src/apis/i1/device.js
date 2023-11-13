@@ -1,3 +1,5 @@
+import { request } from '../request';
+
 /**
  * @param {string} basePath
  * @param {import("axios").AxiosInstance} service
@@ -7,9 +9,7 @@ export const useAPII1Device = (basePath = '', service) => {
   if (!basePath) {
     throw new Error('未知 i1 接口基础路径');
   }
-  if (!service) {
-    throw new Error('必须传入 axios 或 axios 实例');
-  }
+  service = service || request;
   const advantage = {
     basePath,
     /**
@@ -240,12 +240,12 @@ export const useAPII1Device = (basePath = '', service) => {
     /**
      * 执行升级
      * @param {object} params - 执行升级请求参数
-     * @param {"byte"|"http"} params.type - 执行升级请求参数
+     * @param {"byte"|"service"} params.type - 执行升级请求参数
      * @param {string} params.cmd_id - 设备号
      * @param {number} params.id - 升级文件记录ID
      */
     upgrade(params = {}) {
-      if (!(params && ['byte', 'http'].includes(params.type) && params.cmd_id && params.id)) {
+      if (!(params && ['byte', 'service'].includes(params.type) && params.cmd_id && params.id)) {
         return new Error('升级版本信息不完整');
       }
       // /pc/i1 /pc/gw_i1

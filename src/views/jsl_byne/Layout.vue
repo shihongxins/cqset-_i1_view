@@ -16,7 +16,7 @@
           .getRoutes()
           .filter((route) => /\/jsl_byne\//i.test(route.path));
         JSL_BYNR_Routes.forEach((route) => {
-          route.meta.active = route.path === this.$route.path;
+          route.meta.active = route.path === this.$route.path || route.name === this.$route.name;
         });
         return JSL_BYNR_Routes;
       },
@@ -82,7 +82,7 @@
       </p>
     </header>
     <div m="4 b-10" rounded="2" flex="1 ~ col" overflow="hidden" bg="primary/15">
-      <nav h="25">
+      <nav flex="~ wrap">
         <RouterLink
           class="bigscreen-nav-item"
           v-for="navItem in navRoutes"
@@ -96,7 +96,7 @@
           <span class="bigscreen-nav-item--text">{{ navItem.meta?.text }}</span>
         </RouterLink>
       </nav>
-      <main m="x-4" flex="1" overflow="hidden">
+      <main m="t-4 x-4" flex="1" overflow="hidden">
         <RouterView></RouterView>
       </main>
     </div>
@@ -118,7 +118,7 @@
     }
     &-nav {
       &-item {
-        @apply m-5 rounded-6 w-50 overflow-hidden relative inline-flex items-center cursor-pointer;
+        @apply mt-4 ml-4 rounded-6 w-60 overflow-hidden relative inline-flex items-center cursor-pointer;
         &--icon {
           background-image: url('@/assets/images/nav-item--icon.png');
           @apply p-y-3 p-x-8 bg-contain bg-center bg-no-repeat;

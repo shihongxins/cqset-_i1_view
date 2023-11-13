@@ -1,3 +1,23 @@
+import { DevTypeMapWithIcon } from '../utils';
+const GW_DEV_Routes = Array(9)
+  .fill(0)
+  .map((_, i) => {
+    const DevType = DevTypeMapWithIcon.get(`${i + 1}`);
+    if ([0, 1, 2, 4].includes(i + 1) || !(DevType && DevType.desc)) {
+      return;
+    }
+    return {
+      path: `gw/${i + 1}`,
+      name: `GW_DEV_${i + 1}`,
+      component: () => import('@/views/jsl_byne/GW/Device.vue'),
+      meta: {
+        text: `GW${DevType.desc}`,
+        iconClass: 'uno-icon-fix i-material-symbols:lists-rounded',
+        active: false,
+      },
+    };
+  })
+  .filter((r) => r);
 /**
  * @type {import('vue-router').RouteRecord[]}
  */
@@ -32,4 +52,5 @@ export const routes = [
       active: false,
     },
   },
+  ...GW_DEV_Routes,
 ];

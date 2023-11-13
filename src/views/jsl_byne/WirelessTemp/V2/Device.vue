@@ -20,12 +20,8 @@
     if (!err && validateResponseCode(resData)) {
       list.value = [].concat(resData?.data || []).map((device) => {
         device.name = device.name || '未命名设备';
-        device.status_desc = {
-          ONLINE: '在线',
-          OFFLINE: '离线',
-          UNBIND: '未绑定',
-        }[device.status];
         device.status = !!device.status;
+        device.status_desc = device.status ? '在线' : '离线';
         device.updated_at = nativeFormat(device.updated_at);
         device.intro = {
           dept_name: {
@@ -62,13 +58,14 @@
 
   const selectedDevice = ref(null);
   const viewDetail = ref(false);
-  const handleSelectDevice = (device) => {
-    selectedDevice.value = device;
-    viewDetail.value = true;
-  };
   const activePaneName = ref('log');
   const handleChangePanel = (paneName) => {
     activePaneName.value = paneName || 'log';
+  };
+  const handleSelectDevice = (device) => {
+    selectedDevice.value = device;
+    viewDetail.value = true;
+    handleChangePanel('log');
   };
 </script>
 
