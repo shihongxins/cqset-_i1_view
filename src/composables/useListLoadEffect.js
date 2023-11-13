@@ -44,7 +44,7 @@ export const useListQueryEffect = (queryFunc, additionalParams) => {
   };
   const resetSearch = async (event, searchParams) => {
     Object.assign(params, originParams());
-    searchParams && search(event, searchParams);
+    search(event, searchParams);
   };
 
   return {

@@ -72,6 +72,10 @@
       };
       const { params, loading, list, total, pageChange, sizeChange, search, resetSearch } =
         useListQueryEffect(queryFun);
+      const adapterResetSearch = () => {
+        date.value = new Date();
+        resetSearch();
+      };
       return {
         refCompChannel,
         channelDevTypeCompName,
@@ -83,7 +87,7 @@
         pageChange,
         sizeChange,
         search,
-        resetSearch,
+        adapterResetSearch,
       };
     },
     mounted() {
@@ -108,7 +112,7 @@
         </el-date-picker>
       </div>
       <el-button size="mini" type="primary" @click="search">查询</el-button>
-      <el-button size="mini" type="primary" plain @click="resetSearch">重置查询</el-button>
+      <el-button size="mini" type="primary" plain @click="adapterResetSearch">重置查询</el-button>
     </div>
     <div class="table_body table-wrapper" v-loading="loading">
       <component ref="refCompChannel" :is="channelDevTypeCompName" :list="list"></component>

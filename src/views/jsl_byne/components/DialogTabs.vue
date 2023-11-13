@@ -47,7 +47,9 @@
     :visible.sync="visible"
     append-to-body
     destory-on-close
-    top="11.5rem"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    top="10rem"
     width="90%"
     v-bind="$attrs"
     class="dialogtabs-pop"
@@ -82,7 +84,7 @@
           }
         }
         > .el-tabs__content {
-          @apply h-120 overflow-hidden;
+          @apply h-140 overflow-hidden;
           .el-tab-pane {
             @apply h-full overflow-hidden;
           }
