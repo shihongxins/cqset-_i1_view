@@ -40,8 +40,7 @@
             location.href = this.from.href;
           }
         } else {
-          window.open('http://iot.cqset.com/view/#/login', '智慧电网数据分析平台');
-          window.close();
+          this.$router.push({ name: 'Login' });
         }
       },
       handleLogout() {
