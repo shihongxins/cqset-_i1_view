@@ -1,14 +1,15 @@
 import dayjs from 'dayjs';
 import { defineStore } from 'pinia';
 import { LOCAL_STORAGE } from './index';
+import { APIUser } from '../apis/user';
 
 const LOCAL_STORAGE_KEY = 'User';
 
 const getDefaultState = () => {
   let userInfo,
     from = {
-      href: 'http://iot.cqset.com/view/#/login',
-      name: '智慧电网数据分析平台',
+      href: '',
+      name: '',
     };
   try {
     const data = LOCAL_STORAGE.getItem(LOCAL_STORAGE_KEY) || {};
@@ -50,6 +51,14 @@ const useUserStore = defineStore(LOCAL_STORAGE_KEY, {
     validate() {
       this.refresh();
       return Boolean(this.token);
+    },
+    async login(loginInfo = {}) {
+      const { username, password, code } = loginInfo;
+      const res = await APIUser.login(username, password, code);
+      if (res?.data?.code === 200) {
+        this.refresh(res.data.data);
+      }
+      return res;
     },
     async logout() {
       let resData;

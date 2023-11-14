@@ -3,7 +3,7 @@ const GW_DEV_Routes = Array(9)
   .fill(0)
   .map((_, i) => {
     const DevType = DevTypeMapWithIcon.get(`${i + 1}`);
-    if ([0, 1, 2, 4].includes(i + 1) || !(DevType && DevType.desc)) {
+    if ([0, 1, 2, 3, 4].includes(i + 1) || !(DevType && DevType.desc)) {
       return;
     }
     return {
