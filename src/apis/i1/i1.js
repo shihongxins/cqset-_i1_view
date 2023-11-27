@@ -296,39 +296,20 @@ export const APII1 = {
     },
   },
   component: {
-    micro_meteorology: {
-      /**
-       * 微气象数据
-       * @param {object} params - 通道信息
-       * @param {string} params.cmd_id - 设备编号
-       * @param {string} params.component_id - 被监测设备 ID（17 位编码）
-       * @param {string} params.sort - 排序方式
-       * @param {string} params.start_date - 时间
-       * @param {number} params.page - 列表页码
-       * @param {number} params.size - 列表分页量
-       */
-      async list(params) {
-        if (!(params.cmd_id && params.component_id)) {
-          return new Error('无法获取微气象数据，缺少必要信息');
-        }
-        return service
-          .get('/pc/i1/component/micro_meteorology', { params })
-          .catch((reason) => reason);
-      },
-    },
     tower_tilt: {
       /**
        * 杆塔倾斜数据
        * @param {object} params - 通道信息
        * @param {string} params.cmd_id - 设备编号
-       * @param {string} params.component_id - 被监测设备 ID（17 位编码）
+       * @param {string?} params.dev_type - 被监测设备类型
+       * @param {string?} params.component_id - 被监测设备 组件ID
        * @param {string} params.sort - 排序方式
        * @param {string} params.start_date - 时间
        * @param {number} params.page - 列表页码
        * @param {number} params.size - 列表分页量
        */
       async list(params) {
-        if (!(params.cmd_id && params.component_id)) {
+        if (!params.cmd_id) {
           return new Error('无法获取杆塔倾斜数据，缺少必要信息');
         }
         return service.get('/pc/i1/component/tower_tilt', { params }).catch((reason) => reason);

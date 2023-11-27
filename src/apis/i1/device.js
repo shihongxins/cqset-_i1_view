@@ -1,3 +1,5 @@
+import { request as _service } from '../request';
+
 /**
  * @param {string} basePath
  * @param {import("axios").AxiosInstance} service
@@ -7,9 +9,7 @@ export const useAPII1Device = (basePath = '', service) => {
   if (!basePath) {
     throw new Error('未知 i1 接口基础路径');
   }
-  if (!service) {
-    throw new Error('必须传入 axios 或 axios 实例');
-  }
+  service = service || _service;
   const advantage = {
     basePath,
     /**
