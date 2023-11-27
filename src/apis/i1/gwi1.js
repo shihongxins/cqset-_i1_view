@@ -30,7 +30,8 @@ export const APIGWI1 = {
   /**
    * @typedef I1GwComponentDataQuery - i1 国网组件设备数据查询参数
    * @property {string} cmd_id - 设备编号
-   * @property {string} component_id - 被监测设备 ID（17 位编码）
+   * @property {string?} dev_type - 被监测设备类型
+   * @property {string?} component_id - 被监测设备 组件ID
    * @property {string} sort - 排序方式
    * @property {string} start_date - 时间
    * @property {number} page - 列表页码
@@ -40,16 +41,10 @@ export const APIGWI1 = {
     insulator_leakage_current: {
       /**
        * 绝缘子串泄露电流数据
-       * @param {object} params - 通道信息
-       * @param {string} params.cmd_id - 设备编号
-       * @param {string} params.component_id - 被监测设备 ID（17 位编码）
-       * @param {string} params.sort - 排序方式
-       * @param {string} params.start_date - 时间
-       * @param {number} params.page - 列表页码
-       * @param {number} params.size - 列表分页量
+       * @param {I1GwComponentDataQuery} params
        */
       async list(params = {}) {
-        if (!(params.cmd_id && params.component_id)) {
+        if (!params.cmd_id) {
           return new Error('无法获取绝缘子串泄露电流数据，缺少必要信息');
         }
         return service
@@ -122,16 +117,10 @@ export const APIGWI1 = {
     site_pollution: {
       /**
        * 现场污秽数据
-       * @param {object} params - 通道信息
-       * @param {string} params.cmd_id - 设备编号
-       * @param {string} params.component_id - 被监测设备 ID（17 位编码）
-       * @param {string} params.sort - 排序方式
-       * @param {string} params.start_date - 时间
-       * @param {number} params.page - 列表页码
-       * @param {number} params.size - 列表分页量
+       * @param {I1GwComponentDataQuery} params
        */
       async list(params = {}) {
-        if (!(params.cmd_id && params.component_id)) {
+        if (!params.cmd_id) {
           return new Error('无法获取现场污秽数据，缺少必要信息');
         }
         return service
@@ -233,7 +222,7 @@ export const APIGWI1 = {
        * @returns {Promise<import('../global.js').ResponseBody<I1GwPollutionLightningPressure>>}
        */
       async list(params = {}) {
-        if (!(params.cmd_id && params.component_id)) {
+        if (!params.cmd_id) {
           return new Error('无法获取污闪电压数据，缺少必要信息');
         }
         return service
@@ -268,7 +257,7 @@ export const APIGWI1 = {
        * @returns {Promise<import('../global.js').ResponseBody<I1GwIceMonitor>>}
        */
       async list(params = {}) {
-        if (!(params.cmd_id && params.component_id)) {
+        if (!params.cmd_id) {
           return new Error('无法获取覆冰监测数据，缺少必要信息');
         }
         return service
@@ -365,7 +354,7 @@ export const APIGWI1 = {
      * @returns {Promise<import('../global.js').ResponseBody<any>>}
      */
     async characteristic_quantity(params = {}) {
-      if (!(params && params.cmd_id && params.component_id)) {
+      if (!(params && params.cmd_id)) {
         return new Error('无法获取导地线微风振动特征量数据，缺少设备信息');
       }
       return service
@@ -379,25 +368,11 @@ export const APIGWI1 = {
      * @returns {Promise<import('../global.js').ResponseBody<any>>}
      */
     async conductor_dancing(params = {}) {
-      if (!(params && params.cmd_id && params.component_id)) {
+      if (!(params && params.cmd_id)) {
         return new Error('无法获取导地线舞动特征量数据，缺少设备信息');
       }
       return service
         .post(`/pc/gw_i1/dev/component/conductor_dancing`, params)
-        .catch((reason) => reason);
-    },
-    /**
-     * 导线温度数据
-     * @async
-     * @param {I1GwComponentDataQuery} params
-     * @returns {Promise<import('../global.js').ResponseBody<any>>}
-     */
-    async conductor_temperature(params = {}) {
-      if (!(params && params.cmd_id && params.component_id)) {
-        return new Error('无法获取导线温度数据，缺少设备信息');
-      }
-      return service
-        .post(`/pc/gw_i1/dev/component/conductor_temperature`, params)
         .catch((reason) => reason);
     },
     /**
@@ -407,7 +382,7 @@ export const APIGWI1 = {
      * @returns {Promise<import('../global.js').ResponseBody<any>>}
      */
     async conductor_deviation(params = {}) {
-      if (!(params && params.cmd_id && params.component_id)) {
+      if (!(params && params.cmd_id)) {
         return new Error('无法获取导线风偏数据，缺少设备信息');
       }
       return service
@@ -421,11 +396,25 @@ export const APIGWI1 = {
      * @returns {Promise<import('../global.js').ResponseBody<any>>}
      */
     async conductor_sag(params = {}) {
-      if (!(params && params.cmd_id && params.component_id)) {
+      if (!(params && params.cmd_id)) {
         return new Error('无法获取导线拉差数据，缺少设备信息');
       }
       return service
         .post(`/pc/gw_i1/dev/component/conductor_sag`, params)
+        .catch((reason) => reason);
+    },
+    /**
+     * 导线温度数据
+     * @async
+     * @param {I1GwComponentDataQuery} params
+     * @returns {Promise<import('../global.js').ResponseBody<any>>}
+     */
+    async conductor_temperature(params = {}) {
+      if (!(params && params.cmd_id)) {
+        return new Error('无法获取导线温度数据，缺少设备信息');
+      }
+      return service
+        .post(`/pc/gw_i1/dev/component/conductor_temperature`, params)
         .catch((reason) => reason);
     },
     // TODO: component_conductor_dancing_track 导地线舞动轨迹数据

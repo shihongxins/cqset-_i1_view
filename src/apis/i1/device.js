@@ -1,4 +1,4 @@
-import { request } from '../request';
+import { request as _service } from '../request';
 
 /**
  * @param {string} basePath
@@ -9,7 +9,7 @@ export const useAPII1Device = (basePath = '', service) => {
   if (!basePath) {
     throw new Error('未知 i1 接口基础路径');
   }
-  service = service || request;
+  service = service || _service;
   const advantage = {
     basePath,
     /**

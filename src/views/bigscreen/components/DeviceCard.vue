@@ -35,7 +35,12 @@
   <div class="device-card">
     <div class="top">
       <div class="device-icon-wrapper">
-        <img :src="deviceType.icon" :alt="deviceType.desc" :class="deviceStatus.className" />
+        <img
+          v-if="deviceType.img"
+          :src="deviceType.img"
+          :alt="deviceType.desc"
+          :class="deviceStatus.className"
+        />
       </div>
       <ul class="device-info">
         <li>设备类型：{{ deviceType.desc }}</li>
