@@ -11,6 +11,7 @@
 *.webp
 *ignore
 /*-lock*.*
+.env*
 
 ## Local
 .husky
