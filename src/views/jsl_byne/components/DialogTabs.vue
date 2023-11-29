@@ -72,12 +72,12 @@
     &-pop {
     }
     &-tabs {
-      @apply bg-blue-8;
+      @apply border-primary bg-themeblue-900;
       & :deep() {
         > .el-tabs__header {
-          @apply bg-blue-9 border-transparent;
+          @apply bg-themeblue-700 border-transparent;
           .el-tabs__item {
-            @apply bg-blue-6 color-primary;
+            @apply mr-2 bg-themeblue-500 color-themeblue-200;
             &.is-active {
               @apply color-content border-transparent;
             }
@@ -90,9 +90,14 @@
           }
           .el-descriptions {
             &__body {
-              @apply bg-blue-9 color-content;
-              .el-descriptions-item__label {
-                @apply bg-blue-950 color-blue;
+              @apply bg-primary/50 color-content;
+              .el-descriptions-item {
+                &__cell {
+                  @apply border-primary;
+                }
+                &__label {
+                  @apply bg-darkblue/80 color-themeblue-200;
+                }
               }
             }
           }

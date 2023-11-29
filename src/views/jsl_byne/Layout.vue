@@ -2,8 +2,10 @@
   import dayjs from 'dayjs';
   import { useUserStore } from '../../stores/user';
   import { mapState, mapActions } from 'pinia';
+  import SvgIcon from '../../components/SvgIcon.vue';
 
   export default {
+    components: { SvgIcon },
     data() {
       return {
         currentTime: dayjs().format('YYYY 年 MM 月 DD 日 dddd HH:mm:ss'),
@@ -90,7 +92,13 @@
           :class="{ active: navItem.meta?.active }"
         >
           <span class="bigscreen-nav-item--icon">
-            <i class="icon" :class="navItem.meta?.iconClass"></i>
+            <svg-icon
+              v-if="navItem.meta?.iconSVG"
+              className="icon"
+              :name="navItem.meta.iconSVG"
+              size="2rem"
+            ></svg-icon>
+            <i v-else-if="navItem.meta?.iconClass" class="icon" :class="navItem.meta.iconClass"></i>
           </span>
           <span class="bigscreen-nav-item--text">{{ navItem.meta?.text }}</span>
         </RouterLink>
@@ -120,7 +128,7 @@
         @apply mt-4 ml-4 rounded-6 w-60 overflow-hidden relative inline-flex items-center cursor-pointer;
         &--icon {
           background-image: url('@/assets/images/nav-item--icon.png');
-          @apply p-y-3 p-x-8 bg-contain bg-center bg-no-repeat;
+          @apply p-y-3 p-x-8 bg-contain bg-center bg-no-repeat color-content;
         }
         &--text {
           background: url('@/assets/images/nav-item--text.png') center center / 100% 90% no-repeat;

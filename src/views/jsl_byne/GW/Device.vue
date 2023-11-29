@@ -80,7 +80,7 @@
               tower_name: {
                 desc: '杆塔',
               },
-              uuid: {
+              cmd_id: {
                 desc: '设备编号',
               },
               updated_at: {
@@ -134,7 +134,9 @@
         if (!err && validateResponseCode(resData)) {
           const { code = '' } = await useGetDFSCode();
           selectedDeviceChannelList.value = resData.data.map((channel) => {
-            channel.dev_type_desc = ChannelDevTypeMap[channel.dev_type] || '未知类型';
+            const channelDevType = ChannelDevTypeMap[channel.dev_type] || channel.dev_type;
+            channel.dev_type_desc =
+              channelDevType['zh'] || channelDevType['name'] || '未知类型：' + channelDevType;
             channel.updated_at = nativeFormat(channel.updated_at);
             channel.picurl = channel.picurl ? `${channel.picurl}&code=${code}` : '';
             channel.tabLabel = `通道：${channel.channel_no} ${

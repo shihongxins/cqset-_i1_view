@@ -1,45 +1,65 @@
-<script setup>
+<script>
   import { DevTypeMapWithIcon } from '../../../utils';
-  import { computed } from 'vue';
   import IconDeviceUnknown from '@/assets/images/icon-dev--unknown.png';
+  import SvgIcon from '../../../components/SvgIcon.vue';
 
-  const emits = defineEmits(['actionClick']);
-
-  const props = defineProps({
-    device: {
-      type: Object,
-      required: true,
+  export default {
+    emits: ['actionClick'],
+    props: {
+      device: {
+        type: Object,
+        required: true,
+      },
     },
-  });
-
-  const deviceType = computed(() => {
-    let { dev_type_desc, icon } = props.device || {};
-    if (!(dev_type_desc || icon)) {
-      const dev_type = DevTypeMapWithIcon.get(String(props.device?.dev_type || 0));
-      dev_type_desc = dev_type?.desc;
-      icon = dev_type?.icon;
-    }
-    return {
-      desc: dev_type_desc || '未知设备类型',
-      icon: icon || IconDeviceUnknown,
-    };
-  });
-
-  const deviceStatus = computed(() => {
-    let desc = props.device?.status ? '在线' : '离线';
-    let className = props.device?.status ? 'online' : 'offline';
-    return {
-      desc,
-      className,
-    };
-  });
+    components: {
+      SvgIcon,
+    },
+    computed: {
+      deviceType() {
+        let { dev_type_desc, iconImage, iconSVG, iconClass } = this.device || {};
+        if (!(dev_type_desc || iconImage)) {
+          const dev_type = DevTypeMapWithIcon.get(String(this.device?.dev_type || 0));
+          dev_type_desc = dev_type?.desc;
+          iconImage = dev_type?.iconImage;
+          iconSVG = dev_type?.iconSVG || this.$route.meta?.iconSVG;
+          iconClass = dev_type?.iconClass || this.$route.meta?.iconClass;
+        }
+        return {
+          desc: dev_type_desc || '未知设备类型',
+          iconImage: iconImage || IconDeviceUnknown,
+          iconSVG,
+          iconClass,
+        };
+      },
+      deviceStatus() {
+        let desc = this.device?.status ? '在线' : '离线';
+        let className = this.device?.status ? 'online' : 'offline';
+        return {
+          desc,
+          className,
+        };
+      },
+    },
+  };
 </script>
 
 <template>
   <div class="device-card">
     <div class="top">
-      <div class="device-icon-wrapper">
-        <img :src="deviceType.icon" :alt="deviceType.desc" :class="deviceStatus.className" />
+      <div class="device-icon-wrapper" :class="deviceStatus.className">
+        <svg-icon
+          v-if="deviceType.iconSVG"
+          className="cover"
+          :name="deviceType.iconSVG"
+          size="1em"
+        ></svg-icon>
+        <img
+          v-else-if="deviceType.iconImage"
+          class="cover"
+          :src="deviceType.iconImage"
+          :alt="deviceType.desc"
+        />
+        <i v-else-if="deviceType.iconClass" class="cover" :class="deviceType.iconClass"></i>
       </div>
       <slot name="intro">
         <div class="device-intro">
@@ -93,6 +113,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      & > .cover {
+        width: 80px;
+        font-size: 80px;
+      }
     }
     &-intro {
       flex: 1 1 0%;

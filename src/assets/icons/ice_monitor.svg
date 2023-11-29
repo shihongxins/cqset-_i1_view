@@ -1,0 +1,31 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 52.88">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+
+      .cls-1,
+      .cls-2 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M23.64,4.5v0Z" />
+  <line class="cls-1" x1="23.64" y1="18.38" x2="18.8" y2="13.54" />
+  <line class="cls-1" x1="23.64" y1="12.97" x2="17.54" y2="6.87" />
+  <line class="cls-1" x1="18.8" y1="39.21" x2="23.64" y2="34.37" />
+  <line class="cls-1" x1="17.54" y1="45.88" x2="23.64" y2="39.78" />
+  <path class="cls-1" d="M23.62,27L4.83,37.74l18.79-10.74Z" />
+  <polyline class="cls-1" points="10.2 28.87 16.84 30.52 15.18 37.16" />
+  <polyline class="cls-1" points="3.83 31.22 12.2 33.31 10.11 41.68" />
+  <path class="cls-1" d="M4.94,15.14l18.68,11.86L4.94,15.14Z" />
+  <polyline class="cls-1" points="10.2 23.94 16.84 22.28 15.18 15.65" />
+  <polyline class="cls-1" points="3.83 21.59 12.2 19.5 10.11 11.13" />
+  <rect class="cls-2" width="24.75" height="52.88" />
+  <line class="cls-1" x1="30.38" y1="20.25" x2="30.38" y2="31.5" />
+  <line class="cls-1" x1="36" y1="15.75" x2="36" y2="36" />
+</svg>
