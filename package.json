@@ -5,7 +5,7 @@
     "prepare": "husky install",
     "dev": "vite",
     "build": "vite build",
-    "zip": "node zip-dist.cjs --dir=i1 --mark=both",
+    "zip": "node zip-dist.cjs --dir=jsl --mark=both",
     "build:zip": "pnpm run build && pnpm run zip",
     "preview": "vite preview --port 4173",
     "format": "prettier . --write",
