@@ -88,18 +88,18 @@ export default defineConfig(({ mode }) => {
           {
             name: 'vue',
             var: 'Vue',
-            path: 'https://unpkg.com/vue@2.7.14/dist/vue.min.js',
+            path: 'https://cdn.bootcdn.net/ajax/libs/vue/2.7.14/vue.min.js',
           },
           {
             name: 'vue-demi',
             var: 'VueDemi',
-            path: 'https://unpkg.com/vue-demi@0.14.5/lib/index.iife.js',
+            path: 'https://cdn.bootcdn.net/ajax/libs/vue-demi/0.14.6/index.iife.min.js',
           },
           {
             name: 'element-ui',
             var: 'ELEMENT',
-            path: 'https://unpkg.com/element-ui@2.15.13/lib/index.js',
-            css: 'https://unpkg.com/element-ui@2.15.13/lib/theme-chalk/index.css',
+            path: 'https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.14/index.min.js',
+            css: 'https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.14/theme-chalk/index.min.css',
           },
         ],
       })
