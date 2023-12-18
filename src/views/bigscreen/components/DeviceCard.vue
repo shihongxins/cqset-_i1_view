@@ -1,59 +1,87 @@
-<script setup>
+<script>
   import { DevTypeMapWithIcon } from '../../../utils';
-  import { computed } from 'vue';
-  import { router } from '../../../router';
-  import { Message } from 'element-ui';
+  import IconDeviceUnknown from '@/assets/images/icon-dev--unknown.png';
+  import SvgIcon from '../../../components/SvgIcon.vue';
 
-  const props = defineProps({
-    device: {
-      type: Object,
-      required: true,
+  export default {
+    emits: ['actionClick'],
+    props: {
+      device: {
+        type: Object,
+        required: true,
+      },
     },
-  });
-  const deviceType = computed(() => {
-    return DevTypeMapWithIcon.get(String(props.device?.dev_type || 0));
-  });
-  const deviceStatus = computed(() => {
-    let desc = props.device?.status ? '在线' : '离线';
-    let className = props.device?.status ? 'online' : 'offline';
-    return {
-      desc,
-      className,
-    };
-  });
-
-  const handleRouteToDeviceHistories = () => {
-    const { cmd_id = '', name = '' } = props.device;
-    if (!(cmd_id || name)) {
-      return Message.warning('未知设备信息');
-    }
-    router.push({ path: '/bigscreen/histories', query: { cmd_id, name } });
+    components: {
+      SvgIcon,
+    },
+    computed: {
+      deviceType() {
+        let { dev_type_desc, iconImage, iconSVG, iconClass } = this.device || {};
+        if (!(dev_type_desc || iconImage)) {
+          const dev_type = DevTypeMapWithIcon.get(String(this.device?.dev_type || 0));
+          dev_type_desc = dev_type?.desc;
+          iconImage = dev_type?.iconImage;
+          iconSVG = dev_type?.iconSVG || this.$route.meta?.iconSVG;
+          iconClass = dev_type?.iconClass || this.$route.meta?.iconClass;
+        }
+        return {
+          desc: dev_type_desc || '未知设备类型',
+          iconImage: iconImage || IconDeviceUnknown,
+          iconSVG,
+          iconClass,
+        };
+      },
+      deviceStatus() {
+        let desc = this.device?.status ? '在线' : '离线';
+        let className = this.device?.status ? 'online' : 'offline';
+        return {
+          desc,
+          className,
+        };
+      },
+    },
   };
 </script>
 
 <template>
   <div class="device-card">
+    <p class="device-name">{{ device.name || '未命名设备' }}</p>
     <div class="top">
-      <div class="device-icon-wrapper">
+      <div class="device-icon-wrapper" :class="deviceStatus.className">
+        <svg-icon
+          v-if="deviceType.iconSVG"
+          className="cover"
+          :name="deviceType.iconSVG"
+          size="1em"
+        ></svg-icon>
         <img
-          v-if="deviceType.img"
-          :src="deviceType.img"
+          v-else-if="deviceType.iconImage"
+          class="cover"
+          :src="deviceType.iconImage"
           :alt="deviceType.desc"
-          :class="deviceStatus.className"
         />
+        <i v-else-if="deviceType.iconClass" class="cover" :class="deviceType.iconClass"></i>
       </div>
-      <ul class="device-info">
-        <li>设备类型：{{ deviceType.desc }}</li>
-        <li>设备编号：{{ device.cmd_id }}</li>
-        <li>更新时间：{{ device.updated_at }}</li>
-      </ul>
+      <slot name="intro">
+        <div class="device-intro">
+          <template v-if="device.intro">
+            <p v-for="(val, key) in device.intro" :key="key">
+              <strong>{{ val.desc }}</strong>
+              <b> ： </b>
+              <span>{{ val.formatter ? val.formatter(device[key]) : device[key] }}</span>
+            </p>
+          </template>
+          <p v-else>无设备简介信息</p>
+        </div>
+      </slot>
     </div>
     <div class="bottom">
-      <p class="device-name">{{ device.name || '未命名设备' }}</p>
-      <button class="btn-goto--history" @click.stop="handleRouteToDeviceHistories">
-        <span :class="deviceStatus.className">{{ deviceStatus.desc }}</span>
-        <span>历史</span>
-      </button>
+      <slot name="action">
+        <button class="btn-action" @click="emits('actionClick')">
+          <span :class="deviceStatus.className">{{ deviceStatus.desc }}</span>
+          <span>详情</span>
+        </button>
+      </slot>
     </div>
   </div>
 </template>
@@ -85,15 +113,28 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      & > .cover {
+        width: 80px;
+        font-size: 80px;
+      }
     }
-    &-info {
+    &-intro {
       flex: 1 1 0%;
       padding: 1em;
       overflow: hidden;
-      li {
+      font-size: 14px;
+      & > * {
         @apply truncate;
       }
     }
+  }
+  .device-name {
+    box-sizing: border-box;
+    padding: 0 14px;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   .top {
     overflow: hidden;
@@ -101,24 +142,17 @@
     align-items: center;
   }
   .bottom {
+    margin-left: auto;
     padding: 0 14px;
     font-size: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .device-name {
-      box-sizing: border-box;
-      padding-right: 14px;
-      width: 130px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-    .btn-goto--history {
+    .btn-action {
       padding: 2px 30px;
       width: 200px;
       height: 50px;
-      background: url('@/assets/images/btn-history.png') center center/100% 100% no-repeat;
+      background: url('@/assets/images/btn-default.png') center center/100% 100% no-repeat;
       display: inline-flex;
       justify-content: space-between;
       align-items: center;
