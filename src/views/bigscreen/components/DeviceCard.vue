@@ -1,6 +1,5 @@
 <script>
   import { DevTypeMapWithIcon } from '../../../utils';
-  import IconDeviceUnknown from '@/assets/images/icon-dev--unknown.png';
   import SvgIcon from '../../../components/SvgIcon.vue';
 
   export default {
@@ -17,16 +16,16 @@
     computed: {
       deviceType() {
         let { dev_type_desc, iconImage, iconSVG, iconClass } = this.device || {};
+        const dev_type = DevTypeMapWithIcon.get(String(this.device?.dev_type || 0));
         if (!(dev_type_desc || iconImage)) {
-          const dev_type = DevTypeMapWithIcon.get(String(this.device?.dev_type || 0));
           dev_type_desc = dev_type?.desc;
           iconImage = dev_type?.iconImage;
           iconSVG = dev_type?.iconSVG || this.$route.meta?.iconSVG;
           iconClass = dev_type?.iconClass || this.$route.meta?.iconClass;
         }
         return {
-          desc: dev_type_desc || '未知设备类型',
-          iconImage: iconImage || IconDeviceUnknown,
+          desc: dev_type_desc || dev_type.desc || '未知设备类型',
+          iconImage: iconImage || dev_type.img,
           iconSVG,
           iconClass,
         };
@@ -77,7 +76,7 @@
     </div>
     <div class="bottom">
       <slot name="action">
-        <button class="btn-action" @click="emits('actionClick')">
+        <button class="btn-action" @click="$emit('actionClick', device)">
           <span :class="deviceStatus.className">{{ deviceStatus.desc }}</span>
           <span>详情</span>
         </button>
