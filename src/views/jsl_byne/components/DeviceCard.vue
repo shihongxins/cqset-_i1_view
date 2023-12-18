@@ -45,6 +45,7 @@
 
 <template>
   <div class="device-card">
+    <p class="device-name">{{ device.name || '未命名设备' }}</p>
     <div class="top">
       <div class="device-icon-wrapper" :class="deviceStatus.className">
         <svg-icon
@@ -75,7 +76,6 @@
       </slot>
     </div>
     <div class="bottom">
-      <p class="device-name">{{ device.name || '未命名设备' }}</p>
       <slot name="action">
         <button class="btn-action" @click="emits('actionClick')">
           <span :class="deviceStatus.className">{{ deviceStatus.desc }}</span>
@@ -128,25 +128,26 @@
       }
     }
   }
+  .device-name {
+    box-sizing: border-box;
+    padding: 0 14px;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .top {
     overflow: hidden;
     display: flex;
     align-items: center;
   }
   .bottom {
+    margin-left: auto;
     padding: 0 14px;
     font-size: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .device-name {
-      box-sizing: border-box;
-      padding-right: 14px;
-      width: 250px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
     .btn-action {
       padding: 2px 30px;
       width: 200px;
