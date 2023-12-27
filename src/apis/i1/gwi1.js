@@ -1,4 +1,5 @@
-import { request as service } from '../request';
+import { assignCommonProperty } from '@shihongxins/jsutils';
+import service from '../http';
 
 export const APIGWI1 = {
   /**
@@ -14,10 +15,11 @@ export const APIGWI1 = {
    * @returns
    */
   async fault_list(params = {}) {
-    const reqData = Object.assign(
+    const reqData = assignCommonProperty(
       {
-        start_date: '',
         uuid: '',
+        start_date: '',
+        dept_id: 0,
         keyword: '',
         page: 1,
         size: 10,
