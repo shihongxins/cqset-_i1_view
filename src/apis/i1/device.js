@@ -1,4 +1,4 @@
-import { request as _service } from '../request';
+import _service from '../http';
 
 /**
  * @param {string} basePath

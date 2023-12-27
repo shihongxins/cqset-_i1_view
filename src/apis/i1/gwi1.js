@@ -1,5 +1,5 @@
-import { request as service } from '../request';
-import { getListRequestParams } from '../global';
+import { assignCommonProperty } from '@shihongxins/jsutils';
+import service from '../http';
 
 export const APIGWI1 = {
   /**
@@ -15,7 +15,18 @@ export const APIGWI1 = {
    * @returns
    */
   async fault_list(params = {}) {
-    const reqData = Object.assign({}, getListRequestParams(), params);
+    const reqData = assignCommonProperty(
+      {
+        uuid: '',
+        start_date: '',
+        dept_id: 0,
+        keyword: '',
+        page: 1,
+        size: 10,
+        sort: 'desc',
+      },
+      params
+    );
     return service.post('/pc/gw_i1/fault/list', reqData).catch((reason) => reason);
   },
   /**

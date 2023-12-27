@@ -6,7 +6,7 @@
  * @property {number} present_point 预置点号
  */
 
-import { request as service } from '../request';
+import service from '../http';
 import { isNumberInRange } from '@shihongxins/jsutils';
 
 export const APII1 = {
@@ -251,15 +251,24 @@ export const APII1 = {
      * @param {object} query - 查询参数
      * @param {string} query.cmd_id - 设备编号
      * @param {number} query.channel_no - 通道号
+     * @param {"platform"|"device"} source - 数据来源
      * @returns
      */
-    async get(query = {}) {
+    async get(query = {}, source = 'platform') {
       if (!(query.cmd_id && query.channel_no)) {
         return new Error('未知设备及通道信息');
       }
-      return service
-        .get(`${this.basePath}/api/timetable_photo`, { params: query })
-        .catch((reason) => reason);
+      if (source === 'platform') {
+        return service
+          .get(`${this.basePath}/api/timetable_photo`, { params: query })
+          .catch((reason) => reason);
+      }
+      if (source === 'device') {
+        return service
+          .post(`${this.basePath}/api/query_timetable_photo`, query)
+          .catch((reason) => reason);
+      }
+      return new Error('未知数据来源');
     },
     /**
      * 设置抓图任务
@@ -293,6 +302,99 @@ export const APII1 = {
       return service
         .post(`${this.basePath}/api/timetable_photo`, reqData)
         .catch((reason) => reason);
+    },
+  },
+  /**
+   * 主机设置
+   */
+  hostSettings: {
+    basePath: '/pc/i1',
+    /**
+     * 图像采集 参数
+     * @param {object} params - 查询参数
+     * @param {string} params.uuid - 设备编号
+     * @returns
+     */
+    async picture_post(params = {}) {
+      if (!params.uuid) {
+        return new Error('未知设备');
+      }
+      return service.post(`${this.basePath}/dev/image_parameter`, params).catch((reason) => reason);
+    },
+    /**
+     * 图像采集 参数查询
+     * @param {object} query - 查询参数
+     * @param {string} query.cmd_id - 设备编号
+     * @returns
+     */
+    async picture_get(query = {}) {
+      if (!query.cmd_id) {
+        return new Error('未知设备');
+      }
+      return service
+        .get(`${this.basePath}/api/pic_coll_param`, { params: query })
+        .catch((reason) => reason);
+    },
+    /**
+     * 图像采集 参数设置
+     * @param {object} params - 查询参数
+     * @param {string} params.cmd_id - 设备编号（必填）
+     * @param {0|1} params.set_flag - 参数配置标识 0：0x00查询配置 1：0x01 设置配置信息
+     * @param {0|1} params.color_select - 色彩选择 0黑白 1彩色
+     * @param {unmber} params.resolution - 自定义图像分辨率 320X240 为 1;640 X480 为 2;704X576 为3;720 X480 为 4 (标清)  1280 X720 为 5 (720P )；1920 X1080 为 6 (1080P )；1280P或者更高为 7  可自己另外输入
+     * @param {number} params.luminance - 亮度(无符号整数，取值范围: 1-100 )
+     * @param {number} params.contrast - 对比度(无符号整数，取值范围: 1~100)
+     * @param {number} params.saturation - 饱和度(无符号整数，取值范围: 1~100)
+     * @returns
+     */
+    async picture_set(params = {}) {
+      if (!params.cmd_id) {
+        return new Error('未知设备');
+      }
+      return service.post(`${this.basePath}/api/pic_coll_param`, params).catch((reason) => reason);
+    },
+    /**
+     * 视频编码 参数
+     * @param {object} params - 查询参数
+     * @param {string} params.uuid - 设备编号
+     * @returns
+     */
+    async video_post(params = {}) {
+      if (!(params.uuid && params.channel_no)) {
+        return new Error('未知设备或者缺少通道号');
+      }
+      return service.post(`${this.basePath}/dev/video_parameter`, params).catch((reason) => reason);
+    },
+    /**
+     * 视频编码 参数查询
+     * @param {object} query - 查询参数
+     * @param {string} query.cmd_id - 设备编号
+     * @returns
+     */
+    async video_get(query = {}) {
+      if (!(query.cmd_id && query.channel_no)) {
+        return new Error('未知设备或者缺少通道号');
+      }
+      return service
+        .get(`${this.basePath}/api/video_param`, { params: query })
+        .catch((reason) => reason);
+    },
+    /**
+     * 视频编码 参数设置
+     * @param {object} params - 查询参数
+     * @param {string} params.cmd_id - 设备编号（必填）
+     * @param {1|2|3} params.channel_no - 通道号
+     * @param {number} params.request_set_flag - 参数配置类型标识 0：查询配置信息 1：设置配置信息
+     * @param {0|1} params.enc_code - 编码选择 : 0 为 H264，1 为 H265
+     * @param {1|2|3} params.resolution - 自定义图像分辨率 D1为 1;(标清)  720P 为 2 ;(高清)  1080P 为 3 ;(超高清) 可自己另外输入
+     * @param {number} params.stream_rate - 码率 (无符号整数，取值范围 :1~ 10000)单位KB
+     * @returns
+     */
+    async video_set(params = {}) {
+      if (!params.cmd_id) {
+        return new Error('未知设备');
+      }
+      return service.post(`${this.basePath}/api/video_param`, params).catch((reason) => reason);
     },
   },
   component: {
